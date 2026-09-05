@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คลังสื่อ — คลังสื่อการเรียนรู้สำหรับครู นักเรียน และผู้ปกครอง</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1d4ed8; --blue-dark:#1e3a8a; --blue-mid:#2563eb;
+  --blue-50:#eff6ff; --blue-100:#dbeafe; --blue-200:#bfdbfe;
+  --green:#16a34a; --green-50:#dcfce7; --green-700:#15803d;
+  --ink:#1e293b; --muted:#64748b; --line:#e5e7eb;
+  --bg:#ffffff; --shadow:0 1px 3px rgba(15,23,42,.06),0 1px 2px rgba(15,23,42,.04);
+  --shadow-lg:0 4px 16px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Sans Thai','Sarabun',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1360px;margin:0 auto;padding:0 28px}
+
+/* ---------- HEADER ---------- */
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+.hdr{display:flex;align-items:center;gap:24px;height:74px}
+.logo{font-size:26px;font-weight:800;color:var(--blue-dark);letter-spacing:-.5px;white-space:nowrap}
+.search{flex:0 1 420px;position:relative}
+.search input{
+  width:100%;height:44px;border:1px solid var(--line);border-radius:999px;
+  padding:0 18px 0 46px;font-size:14px;font-family:inherit;color:var(--ink);
+  background:#fff;outline:none;transition:.15s;
+}
+.search input:focus{border-color:var(--blue-200);box-shadow:0 0 0 3px var(--blue-50)}
+.search input::placeholder{color:#94a3b8}
+.search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#94a3b8}
+nav{display:flex;align-items:center;gap:26px;margin-left:auto;font-size:15px;font-weight:500}
+nav a{color:#475569;padding:6px 0;position:relative;white-space:nowrap;transition:color .15s}
+nav a:hover{color:var(--blue)}
+nav a.active{color:var(--blue);font-weight:600}
+nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-26px;height:3px;background:var(--blue);border-radius:3px 3px 0 0}
+.chev{display:inline-block;margin-left:4px;font-size:10px;vertical-align:middle;color:#94a3b8}
+.hdr-btns{display:flex;gap:10px;margin-left:8px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:42px;padding:0 20px;border-radius:8px;font-size:15px;font-weight:600;
+  font-family:inherit;cursor:pointer;border:1.5px solid transparent;transition:.15s;white-space:nowrap;
+}
+.btn-outline{border-color:var(--blue);color:var(--blue);background:#fff}
+.btn-outline:hover{background:var(--blue-50)}
+.btn-solid{background:var(--blue);color:#fff}
+.btn-solid:hover{background:var(--blue-dark)}
+
+/* ---------- HERO ---------- */
+.hero{
+  margin:24px auto 0;border-radius:16px;overflow:hidden;
+  background:linear-gradient(105deg,#eaf2fe 0%,#dfeafd 45%,#d6e6fc 100%);
+  display:flex;align-items:center;gap:20px;padding:52px 56px;position:relative;min-height:290px;
+}
+.hero-txt{flex:1 1 auto;max-width:640px;z-index:2}
+.hero h1{font-size:41px;line-height:1.32;font-weight:800;color:var(--blue-dark);letter-spacing:-.5px}
+.hero p{margin-top:16px;font-size:17px;color:#475569}
+.hero-btns{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+.hero-btns .btn{height:50px;padding:0 26px;font-size:16px;border-radius:10px;box-shadow:var(--shadow)}
+.btn-white{background:#fff;color:var(--green-700);border-color:#bbf7d0}
+.btn-white:hover{background:#f0fdf4}
+.hero-art{flex:0 0 400px;display:flex;align-items:center;justify-content:center}
+.hero-art svg{width:100%;height:auto;max-width:400px}
+
+/* ---------- SECTIONS ---------- */
+section{margin-top:46px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.sec-head h2{font-size:22px;font-weight:700;color:var(--ink)}
+.see-all{font-size:14px;font-weight:500;color:var(--blue);display:inline-flex;align-items:center;gap:4px}
+.see-all:hover{text-decoration:underline}
+
+/* subjects */
+.subjects{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.subj{
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 16px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+  transition:.18s;box-shadow:var(--shadow);
+}
+.subj:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--blue-200)}
+.subj-ico{
+  width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:19px;font-weight:700;color:#fff;flex-shrink:0;
+}
+.subj span{font-size:15px;font-weight:600;color:#334155}
+.c-math{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+.c-sci{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.c-thai{background:linear-gradient(135deg,#fb923c,#f97316)}
+.c-eng{background:linear-gradient(135deg,#a855f7,#9333ea)}
+.c-soc{background:linear-gradient(135deg,#2dd4bf,#14b8a6)}
+.c-com{background:linear-gradient(135deg,#60a5fa,#3b82f6)}
+
+/* featured cards */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{
+  background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  display:flex;gap:14px;padding:14px;position:relative;transition:.18s;box-shadow:var(--shadow);
+}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--blue-200)}
+.thumb{
+  flex:0 0 108px;height:126px;border-radius:10px;overflow:hidden;position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.card-body{flex:1;min-width:0;padding-right:22px}
+.card-title{font-size:15px;font-weight:600;color:var(--ink);line-height:1.45;margin-bottom:10px}
+.meta{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);margin-bottom:5px}
+.meta .dot{width:14px;text-align:center;flex-shrink:0}
+.m-sci{color:#16a34a}.m-math{color:#2563eb}.m-eng{color:#9333ea}.m-thai{color:#f97316}
+.price{
+  display:inline-block;margin-top:9px;padding:5px 14px;border-radius:7px;
+  font-size:13px;font-weight:600;
+}
+.p-free{background:var(--green-50);color:var(--green-700)}
+.p-paid{background:var(--blue-50);color:var(--blue)}
+.heart{
+  position:absolute;top:14px;right:13px;width:20px;height:20px;color:#cbd5e1;cursor:pointer;transition:.15s;z-index:3;
+}
+.heart:hover{color:#f87171;transform:scale(1.12)}
+
+/* latest cards */
+.latest{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.lcard{
+  background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  display:flex;gap:12px;padding:12px;position:relative;transition:.18s;box-shadow:var(--shadow);
+}
+.lcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--blue-200)}
+.lthumb{flex:0 0 76px;height:76px;border-radius:9px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.lbody{flex:1;min-width:0;padding-right:20px}
+.ltitle{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:5px}
+.lmeta{font-size:12px;color:var(--muted)}
+.lcard .price{margin-top:7px;padding:4px 11px;font-size:12px}
+.lcard .heart{top:11px;right:10px;width:17px;height:17px}
+
+/* thumbnail art */
+.t-solar{background:linear-gradient(160deg,#1e3a8a,#1e40af 50%,#312e81)}
+.t-eq{background:linear-gradient(160deg,#f8fafc,#eff6ff);border:1px solid #dbeafe}
+.t-pos{background:linear-gradient(160deg,#fefce8,#fef3c7)}
+.t-game{background:linear-gradient(160deg,#7dd3fc,#38bdf8 60%,#0ea5e9)}
+.t-photo{background:linear-gradient(150deg,#86efac,#22c55e)}
+.t-para{background:linear-gradient(150deg,#fbcfe8,#f9a8d4)}
+.t-graph{background:linear-gradient(150deg,#f8fafc,#e2e8f0);border:1px solid #e2e8f0}
+.t-map{background:linear-gradient(150deg,#5eead4,#14b8a6)}
+.t-code{background:linear-gradient(150deg,#1e40af,#1e3a8a)}
+.t-label{
+  position:absolute;left:0;right:0;font-weight:800;text-align:center;line-height:1.2;
+}
+
+/* ---------- FOOTER ---------- */
+footer{margin-top:60px;background:#fafbfc;border-top:1px solid var(--line);padding:44px 0 0}
+.fcols{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr 1fr 1.25fr;gap:32px}
+.fcol h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:14px}
+.fcol .logo{font-size:23px;margin-bottom:12px}
+.fcol p{font-size:13.5px;color:var(--muted);line-height:1.75;margin-bottom:16px}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fcol ul li a{font-size:13.5px;color:var(--muted);transition:color .15s}
+.fcol ul li a:hover{color:var(--blue)}
+.socials{display:flex;gap:9px}
+.soc{
+  width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:14px;transition:.15s;
+}
+.soc:hover{transform:translateY(-2px)}
+.s-fb{background:#1877f2}.s-line{background:#06c755}.s-yt{background:#ff0000}.s-mail{background:#64748b}
+.contact li{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;color:var(--muted)}
+.contact li svg{flex-shrink:0;margin-top:4px;color:#94a3b8}
+.fbar{margin-top:40px;background:#1e293b;color:#cbd5e1;text-align:center;padding:16px;font-size:13.5px}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:1180px){
+  .subjects{grid-template-columns:repeat(3,1fr)}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .latest{grid-template-columns:repeat(3,1fr)}
+  .fcols{grid-template-columns:repeat(3,1fr)}
+  nav{display:none}
+}
+@media(max-width:820px){
+  .wrap{padding:0 18px}
+  .hero{flex-direction:column;text-align:center;padding:38px 26px}
+  .hero h1{font-size:29px}
+  .hero-art{flex:0 0 auto;max-width:300px;margin-top:8px}
+  .hero-btns{justify-content:center}
+  .hdr{gap:12px}
+  .search{flex:1 1 auto}
+}
+@media(max-width:620px){
+  .subjects{grid-template-columns:repeat(2,1fr)}
+  .cards,.latest{grid-template-columns:1fr}
+  .fcols{grid-template-columns:repeat(2,1fr)}
+  .logo{font-size:22px}
+  .hdr-btns .btn-outline{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="wrap hdr">
+    <div class="logo">คลังสื่อ</div>
+
+    <div class="search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" placeholder="ค้นหาสื่อการเรียนรู้ ใบงาน แบบฝึกหัด PowerPoint...">
+    </div>
+
+    <nav>
+      <a href="#" class="active">หน้าแรก</a>
+      <a href="#">สื่อทั้งหมด</a>
+      <a href="#">วิชา<span class="chev">▼</span></a>
+      <a href="#">สื่อฟรี</a>
+      <a href="#">สื่อของฉัน</a>
+    </nav>
+
+    <div class="hdr-btns">
+      <a href="#" class="btn btn-outline">เข้าสู่ระบบ</a>
+      <a href="#" class="btn btn-solid">สมัครสมาชิก</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <div class="hero">
+    <div class="hero-txt">
+      <h1>คลังสื่อการเรียนรู้ดี ๆ<br>สำหรับครู นักเรียน และผู้ปกครอง</h1>
+      <p>เข้าใช้ฟรีบางส่วน และเลือกซื้อสื่อคุณภาพในราคาเริ่มต้นเพียง 5–10 บาท</p>
+      <div class="hero-btns">
+        <a href="#" class="btn btn-solid">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          ดูสื่อทั้งหมด
+        </a>
+        <a href="#" class="btn btn-white">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8c-1.5-3-6-3-6 0 0 1.5 3 1.5 6 0zm0 0c1.5-3 6-3 6 0 0 1.5-3 1.5-6 0z"/></svg>
+          สื่อฟรี
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- tablet -->
+        <rect x="112" y="58" width="176" height="132" rx="12" fill="#1e40af"/>
+        <rect x="120" y="66" width="160" height="116" rx="7" fill="#fff"/>
+        <rect x="130" y="76" width="60" height="7" rx="3.5" fill="#bfdbfe"/>
+        <rect x="130" y="90" width="140" height="38" rx="5" fill="#eff6ff"/>
+        <circle cx="146" cy="109" r="10" fill="#93c5fd"/>
+        <rect x="163" y="101" width="72" height="6" rx="3" fill="#c7d2fe"/>
+        <rect x="163" y="112" width="52" height="6" rx="3" fill="#ddd6fe"/>
+        <rect x="130" y="136" width="66" height="36" rx="5" fill="#dbeafe"/>
+        <rect x="204" y="136" width="66" height="36" rx="5" fill="#fef3c7"/>
+        <rect x="112" y="190" width="176" height="9" rx="4.5" fill="#1e3a8a"/>
+        <!-- books -->
+        <rect x="40" y="150" width="96" height="16" rx="4" fill="#3b82f6"/>
+        <rect x="46" y="166" width="96" height="16" rx="4" fill="#22c55e"/>
+        <rect x="40" y="182" width="96" height="16" rx="4" fill="#fb923c"/>
+        <rect x="52" y="154" width="8" height="8" rx="2" fill="#bfdbfe"/>
+        <rect x="58" y="170" width="8" height="8" rx="2" fill="#bbf7d0"/>
+        <rect x="52" y="186" width="8" height="8" rx="2" fill="#fed7aa"/>
+        <!-- notebook -->
+        <rect x="270" y="118" width="94" height="112" rx="9" fill="#fff" stroke="#e2e8f0" stroke-width="2"/>
+        <rect x="270" y="118" width="94" height="26" rx="9" fill="#fef9c3"/>
+        <text x="317" y="136" font-family="Noto Sans Thai,sans-serif" font-size="13" font-weight="700" fill="#a16207" text-anchor="middle">ใบงาน</text>
+        <rect x="298" y="156" width="52" height="5" rx="2.5" fill="#e2e8f0"/>
+        <rect x="298" y="176" width="52" height="5" rx="2.5" fill="#e2e8f0"/>
+        <rect x="298" y="196" width="40" height="5" rx="2.5" fill="#e2e8f0"/>
+        <rect x="281" y="151" width="11" height="11" rx="2.5" stroke="#3b82f6" stroke-width="2" fill="#fff"/>
+        <path d="m283.5 156.5 2 2 4-4.5" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="281" y="171" width="11" height="11" rx="2.5" stroke="#3b82f6" stroke-width="2" fill="#fff"/>
+        <path d="m283.5 176.5 2 2 4-4.5" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="281" y="191" width="11" height="11" rx="2.5" stroke="#cbd5e1" stroke-width="2" fill="#fff"/>
+        <!-- pencil cup -->
+        <path d="M296 236h40l-5 34h-30z" fill="#e2e8f0"/>
+        <rect x="303" y="212" width="6" height="26" rx="3" fill="#fbbf24"/>
+        <rect x="313" y="204" width="6" height="34" rx="3" fill="#60a5fa"/>
+        <rect x="323" y="218" width="6" height="20" rx="3" fill="#f87171"/>
+        <!-- floating icons -->
+        <circle cx="88" cy="72" r="24" fill="#2563eb"/>
+        <path d="M76 70l12-6 12 6-12 6z" fill="#fff"/><path d="M82 74v6c0 2 3 3.5 6 3.5s6-1.5 6-3.5v-6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="182" cy="34" r="20" fill="#fde68a"/>
+        <path d="M182 24c-4.5 0-8 3.4-8 7.6 0 2.9 1.6 4.6 2.8 6 .8.9 1.2 1.5 1.2 2.4h8c0-.9.4-1.5 1.2-2.4 1.2-1.4 2.8-3.1 2.8-6 0-4.2-3.5-7.6-8-7.6z" fill="#f59e0b"/>
+        <rect x="178.5" y="41.5" width="7" height="4" rx="2" fill="#d97706"/>
+        <circle cx="248" cy="36" r="17" fill="#22c55e"/>
+        <path d="m241 36 4.5 4.5L255 31" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M318 92l3.2 6.6 7.3 1-5.3 5.1 1.3 7.2-6.5-3.4-6.5 3.4 1.3-7.2-5.3-5.1 7.3-1z" fill="#fbbf24"/>
+        <circle cx="72" cy="222" r="14" fill="#bfdbfe"/>
+        <rect x="66" y="216" width="12" height="12" rx="2.5" fill="#2563eb"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ============ SUBJECTS ============ -->
+  <section>
+    <div class="sec-head"><h2>เลือกตามวิชา</h2></div>
+    <div class="subjects">
+      <a href="#" class="subj"><div class="subj-ico c-math">×÷</div><span>คณิตศาสตร์</span></a>
+      <a href="#" class="subj"><div class="subj-ico c-sci">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5V3"/><path d="M7.5 15h9"/></svg>
+      </div><span>วิทยาศาสตร์</span></a>
+      <a href="#" class="subj"><div class="subj-ico c-thai">ก</div><span>ภาษาไทย</span></a>
+      <a href="#" class="subj"><div class="subj-ico c-eng" style="font-size:15px">ABC</div><span>ภาษาอังกฤษ</span></a>
+      <a href="#" class="subj"><div class="subj-ico c-soc">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 8v12h16V8z"/><path d="M9 20v-6h6v6"/><path d="M4 8h16"/></svg>
+      </div><span>สังคมศึกษา</span></a>
+      <a href="#" class="subj"><div class="subj-ico c-com">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+      </div><span>คอมพิวเตอร์</span></a>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>สื่อแนะนำ</h2>
+      <a href="#" class="see-all">ดูทั้งหมด ›</a>
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <div class="thumb t-solar">
+          <div class="t-label" style="top:12px;color:#fff;font-size:15px">ระบบสุริยะ</div>
+          <svg viewBox="0 0 108 126" style="position:absolute;top:26px">
+            <circle cx="30" cy="78" r="17" fill="#fbbf24"/><circle cx="30" cy="78" r="12" fill="#fcd34d"/>
+            <ellipse cx="30" cy="78" rx="38" ry="30" stroke="#60a5fa" stroke-width="1" fill="none" opacity=".5"/>
+            <ellipse cx="30" cy="78" rx="55" ry="42" stroke="#60a5fa" stroke-width="1" fill="none" opacity=".35"/>
+            <circle cx="64" cy="62" r="5" fill="#f87171"/>
+            <circle cx="80" cy="94" r="6.5" fill="#38bdf8"/>
+            <circle cx="52" cy="42" r="3.5" fill="#c4b5fd"/>
+            <circle cx="88" cy="40" r="1.6" fill="#fff"/><circle cx="16" cy="34" r="1.4" fill="#fff"/><circle cx="96" cy="70" r="1.3" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-title">ใบงานระบบสุริยะ ป.4</div>
+          <div class="meta"><span class="dot m-sci">⚗</span> วิทยาศาสตร์</div>
+          <div class="meta"><span class="dot">👥</span> ประถมศึกษาปีที่ 4</div>
+          <div class="meta"><span class="dot">📄</span> ใบงาน</div>
+          <span class="price p-free">ฟรี</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <div class="thumb t-eq">
+          <div class="t-label" style="top:10px;color:#1d4ed8;font-size:15px">สมการ</div>
+          <div style="position:absolute;top:44px;left:0;right:0;text-align:center;font-family:ui-monospace,monospace;font-size:12.5px;color:#334155;font-weight:600;line-height:2">
+            x + 5 = 12<br>2x − 3 = 7
+          </div>
+          <svg viewBox="0 0 40 40" width="26" height="26" style="position:absolute;bottom:8px;right:8px"><rect x="8" y="6" width="7" height="24" rx="2" fill="#fbbf24" transform="rotate(32 11 18)"/><path d="M24 30l3-7 3 3z" fill="#f59e0b"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-title">แบบฝึกสมการ ม.1</div>
+          <div class="meta"><span class="dot m-math">📊</span> คณิตศาสตร์</div>
+          <div class="meta"><span class="dot">👥</span> มัธยมศึกษาปีที่ 1</div>
+          <div class="meta"><span class="dot">✏️</span> แบบฝึกหัด</div>
+          <span class="price p-paid">5 บาท</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <div class="thumb t-pos">
+          <div class="t-label" style="top:12px;color:#1e293b;font-size:13px">Parts<br>of Speech</div>
+          <svg viewBox="0 0 60 40" width="46" height="31" style="position:absolute;top:56px">
+            <rect width="60" height="40" rx="3" fill="#012169"/>
+            <path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/>
+            <path d="M0 0l60 40M60 0L0 40" stroke="#C8102E" stroke-width="4"/>
+            <path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="13"/>
+            <path d="M30 0v40M0 20h60" stroke="#C8102E" stroke-width="7"/>
+          </svg>
+          <div style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:8.5px;color:#78716c;font-weight:600">Noun · Verb · Adjective</div>
+          <div style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e7e5e4;border-radius:4px;padding:1px 7px;font-size:8px;font-weight:700;color:#57534e">English</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">PowerPoint<br>Parts of Speech</div>
+          <div class="meta"><span class="dot m-eng">🔤</span> ภาษาอังกฤษ</div>
+          <div class="meta"><span class="dot">👥</span> มัธยมศึกษาปีที่ 2–3</div>
+          <div class="meta"><span class="dot">📕</span> PowerPoint</div>
+          <span class="price p-paid">10 บาท</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <div class="thumb t-game">
+          <svg viewBox="0 0 108 126" style="position:absolute;inset:0">
+            <ellipse cx="22" cy="26" rx="9" ry="11" fill="#fca5a5"/><path d="M22 37v10" stroke="#fff" stroke-width="1.2"/>
+            <ellipse cx="86" cy="22" rx="8" ry="10" fill="#fde047"/><path d="M86 32v10" stroke="#fff" stroke-width="1.2"/>
+            <ellipse cx="94" cy="52" rx="7" ry="9" fill="#c4b5fd"/><path d="M94 61v8" stroke="#fff" stroke-width="1.2"/>
+            <circle cx="40" cy="96" r="15" fill="#fed7aa"/>
+            <circle cx="35" cy="93" r="1.8" fill="#1e293b"/><circle cx="45" cy="93" r="1.8" fill="#1e293b"/>
+            <path d="M36 100q4 4 8 0" stroke="#1e293b" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <circle cx="72" cy="99" r="13" fill="#fecaca"/>
+            <circle cx="68" cy="96" r="1.6" fill="#1e293b"/><circle cx="76" cy="96" r="1.6" fill="#1e293b"/>
+            <path d="M69 103q3.5 3.5 7 0" stroke="#1e293b" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          </svg>
+          <div class="t-label" style="top:44px;color:#fff;font-size:16px;text-shadow:0 2px 4px rgba(0,0,0,.25)">เกมคำศัพท์</div>
+          <div style="position:absolute;top:68px;left:50%;transform:translateX(-50%);background:#f97316;color:#fff;border-radius:5px;padding:1px 9px;font-size:11px;font-weight:800">ป.6</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">เกมคำศัพท์ ป.6</div>
+          <div class="meta"><span class="dot m-thai">ก</span> ภาษาไทย</div>
+          <div class="meta"><span class="dot">👥</span> ประถมศึกษาปีที่ 6</div>
+          <div class="meta"><span class="dot">🎮</span> เกมการศึกษา</div>
+          <span class="price p-free">ฟรี</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ LATEST ============ -->
+  <section>
+    <div class="sec-head">
+      <h2>สื่อใหม่ล่าสุด</h2>
+      <a href="#" class="see-all">ดูทั้งหมด ›</a>
+    </div>
+    <div class="latest">
+
+      <div class="lcard">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <div class="lthumb t-photo">
+          <svg viewBox="0 0 76 76"><circle cx="20" cy="18" r="9" fill="#fde047"/><path d="M50 62c-14 0-22-10-22-22 12 0 22 9 22 22z" fill="#166534"/><path d="M50 62c0-13 9-22 21-22 0 12-8 22-21 22z" fill="#15803d"/><path d="M50 62V40" stroke="#14532d" stroke-width="2.5"/></svg>
+        </div>
+        <div class="lbody">
+          <div class="ltitle">ใบงานการสังเคราะห์ด้วยแสง</div>
+          <div class="lmeta">วิทยาศาสตร์ • ป.5</div>
+          <span class="price p-free">ฟรี</span>
+        </div>
+      </div>
+
+      <div class="lcard">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <div class="lthumb t-para">
+          <div style="font-size:11px;font-weight:800;color:#9d174d;text-align:center;line-height:1.3">การเขียน<br>ย่อหน้า</div>
+        </div>
+        <div class="lbody">
+          <div class="ltitle">แบบฝึกการเขียนย่อหน้า</div>
+          <div class="lmeta">ภาษาไทย • ป.4</div>
+          <span class="price p-paid">5 บาท</span>
+        </div>
+      </div>
+
+      <div class="lcard">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <div class="lthumb t-graph">
+          <svg viewBox="0 0 76 76"><path d="M14 14v48h48" stroke="#94a3b8" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M14 30h48M14 46h48M30 14v48M46 14v48" stroke="#e2e8f0" stroke-width="1"/><path d="M18 56 58 20" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/><circle cx="58" cy="20" r="3.5" fill="#2563eb"/></svg>
+        </div>
+        <div class="lbody">
+          <div class="ltitle">กราฟเส้นตรง</div>
+          <div class="lmeta">คณิตศาสตร์ • ม.2</div>
+          <span class="price p-paid">10 บาท</span>
+        </div>
+      </div>
+
+      <div class="lcard">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <div class="lthumb t-map">
+          <svg viewBox="0 0 76 76"><path d="M12 26c8-6 16-4 24 0s16 2 24-4v34c-8 6-16 2-24-2s-16-6-24 0z" fill="#0d9488" opacity=".85"/><circle cx="30" cy="34" r="3" fill="#fff"/><circle cx="50" cy="44" r="3" fill="#fff"/></svg>
+        </div>
+        <div class="lbody">
+          <div class="ltitle">แผนที่ทวีปเอเชีย</div>
+          <div class="lmeta">สังคมศึกษา • ป.6</div>
+          <span class="price p-free">ฟรี</span>
+        </div>
+      </div>
+
+      <div class="lcard">
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        <div class="lthumb t-code">
+          <svg viewBox="0 0 76 76"><path d="M28 26 16 38l12 12M48 26l12 12-12 12" stroke="#93c5fd" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 22 34 54" stroke="#fbbf24" stroke-width="3.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="lbody">
+          <div class="ltitle">พื้นฐานการเขียนโปรแกรม</div>
+          <div class="lmeta">คอมพิวเตอร์ • ม.1</div>
+          <span class="price p-paid">10 บาท</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div class="fcol">
+        <div class="logo">คลังสื่อ</div>
+        <p>แหล่งรวมสื่อการเรียนรู้คุณภาพสำหรับครู นักเรียน<br>และผู้ปกครอง ในราคาที่เข้าถึงได้</p>
+        <div class="socials">
+          <a href="#" class="soc s-fb" title="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.2 0-4 1.8-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8c0-.6.4-1 1-1z"/></svg></a>
+          <a href="#" class="soc s-line" title="LINE"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.6s5.9-3.5 8-6c1.4-1.5 2-3.1 2-4.9C22 6.6 17.5 3 12 3z"/></svg></a>
+          <a href="#" class="soc s-yt" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12s0-3.4-.4-5c-.2-.9-.9-1.6-1.8-1.8C18.1 4.8 12 4.8 12 4.8s-6.1 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 8.6 2 12 2 12s0 3.4.4 5c.2.9.9 1.6 1.8 1.8 1.7.4 7.8.4 7.8.4s6.1 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.6.4-5 .4-5zM10 15V9l5.2 3z"/></svg></a>
+          <a href="#" class="soc s-mail" title="Email"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="fcol">
+        <h4>เกี่ยวกับเรา</h4>
+        <ul>
+          <li><a href="#">เกี่ยวกับคลังสื่อ</a></li>
+          <li><a href="#">วิธีการสั่งซื้อ</a></li>
+          <li><a href="#">เงื่อนไขการใช้งาน</a></li>
+          <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>ช่วยเหลือ</h4>
+        <ul>
+          <li><a href="#">คำถามที่พบบ่อย</a></li>
+          <li><a href="#">วิธีการชำระเงิน</a></li>
+          <li><a href="#">แจ้งปัญหา</a></li>
+          <li><a href="#">ติดต่อเรา</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>สำหรับครู</h4>
+        <ul>
+          <li><a href="#">ขายสื่อกับเรา</a></li>
+          <li><a href="#">คู่มือการอัปโหลดสื่อ</a></li>
+          <li><a href="#">สิทธิประโยชน์ครู</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>ติดตามเรา</h4>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">LINE Official</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>ติดต่อเรา</h4>
+        <ul class="contact">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> support@klangsua.com</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1z"/></svg> 02-123-4567</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg> จันทร์-ศุกร์ 09:00-18:00</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="fbar">© 2024 คลังสื่อ สงวนลิขสิทธิ์.</div>
+</footer>
+
+</body>
+</html>
