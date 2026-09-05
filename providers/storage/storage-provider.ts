@@ -1,0 +1,4 @@
+export type StorageProviderName="local_test"|"google_drive"|"cloudflare_r2";
+export interface StorageMetadata{provider:StorageProviderName;fileId:string;path:string;fileName:string;mimeType:string;size:number;checksum?:string;createdAt?:string;}
+export interface UploadInput{path:string;fileName:string;mimeType:string;data:Blob|Uint8Array;checksum?:string;metadata?:Record<string,string>;}
+export interface StorageProvider{readonly name:StorageProviderName;upload(input:UploadInput):Promise<StorageMetadata>;download(fileId:string):Promise<Response>;delete(fileId:string):Promise<void>;exists(fileId:string):Promise<boolean>;getMetadata(fileId:string):Promise<StorageMetadata>;move(fileId:string,destinationPath:string):Promise<StorageMetadata>;copy(fileId:string,destinationPath:string):Promise<StorageMetadata>;health():Promise<{status:"healthy"|"warning"|"critical"|"unknown";message:string}>;}

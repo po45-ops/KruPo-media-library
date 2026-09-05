@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function NotFound(){return <div className="container-page grid min-h-[55vh] place-items-center text-center"><div><p className="text-6xl">🧭</p><h1 className="mt-5 text-3xl font-black text-[#0B2F6B]">ไม่พบหน้าที่คุณกำลังหา</h1><p className="mt-2 text-[#66758A]">ลิงก์อาจถูกย้ายหรือไม่มีอยู่แล้ว</p><Link className="btn btn-primary mt-6" href="/">กลับหน้าแรก</Link></div></div>}

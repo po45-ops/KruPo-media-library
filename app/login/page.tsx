@@ -1,0 +1,2 @@
+import type { Metadata } from "next"; import { AuthCard } from "@/components/auth-card"; import { safeReturnPath } from "@/server/security/return-path";
+export const metadata:Metadata={title:"เข้าสู่ระบบ",robots:{index:false,follow:false}}; export default async function Page({searchParams}:{searchParams:Promise<{next?:string}>}){const params=await searchParams;return <AuthCard mode="login" next={safeReturnPath(params.next)}/>}

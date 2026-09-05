@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+:root { --navy:#0B2F6B; --blue:#0F5BD8; --purple:#6554E8; --soft:#EEF4FF; --mint:#2FC58D; --yellow:#F6B73C; --text:#14243D; --muted:#66758A; --border:#E1E8F2; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin:0; color:var(--text); background:#fff; font-family:"Noto Sans Thai","Th Sarabun New",Tahoma,Arial,sans-serif; }
+a { color:inherit; text-decoration:none; }
+button,input,select,textarea { font:inherit; }
+:focus-visible { outline:3px solid rgba(15,91,216,.35); outline-offset:2px; }
+.container-page { width:min(1180px,calc(100% - 32px)); margin-inline:auto; }
+.soft-card { border:1px solid var(--border); background:#fff; border-radius:20px; box-shadow:0 10px 30px rgba(11,47,107,.07); }
+.btn { min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:.5rem; border-radius:12px; padding:.7rem 1.05rem; font-weight:750; transition:.18s ease; cursor:pointer; border:1px solid transparent; }
+.btn:hover { transform:translateY(-1px); }
+.btn-primary { color:#fff; background:linear-gradient(135deg,var(--blue),#0947B8); box-shadow:0 8px 20px rgba(15,91,216,.2); }
+.btn-secondary { color:var(--blue); background:#fff; border-color:#9FC1F7; }
+.badge { display:inline-flex; align-items:center; gap:.3rem; border-radius:999px; padding:.3rem .65rem; font-size:.78rem; font-weight:700; }
+.section-title { color:var(--navy); font-size:clamp(1.35rem,2.4vw,1.9rem); font-weight:850; letter-spacing:-.02em; }
+.field { width:100%; min-height:46px; border:1px solid var(--border); border-radius:12px; padding:.72rem .85rem; background:#fff; }
+.field:focus { border-color:var(--blue); box-shadow:0 0 0 3px rgba(15,91,216,.11); outline:none; }
+.dot-grid { background-image:radial-gradient(#b8cdf0 1px,transparent 1px); background-size:18px 18px; }
+@media (max-width: 760px) { .container-page{width:min(100% - 22px,1180px)} }
