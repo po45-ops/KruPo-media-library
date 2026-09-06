@@ -35,7 +35,7 @@ export default async function MediaDetail({ params }: { params: Promise<{ slug: 
       <div className="grid gap-8 lg:grid-cols-[1fr_.88fr]">
         <section>
           <div className="grid aspect-[16/10] place-items-center rounded-[28px] p-10 text-white shadow-xl" style={{ background: media.accent }}>
-            <h1 className="max-w-[16ch] text-center text-4xl font-black md:text-5xl">{media.titleTh}</h1>
+            <p aria-hidden="true" className="max-w-[16ch] text-center text-4xl font-black md:text-5xl">{media.titleTh}</p>
           </div>
           <div className="mt-4 grid grid-cols-4 gap-3">
             {["หน้าปก", "ตัวอย่าง 1", "ตัวอย่าง 2", "วิธีใช้"].map((label, index) => (
