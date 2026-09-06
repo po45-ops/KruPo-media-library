@@ -9,7 +9,7 @@
   "vars": {
     "APP_ENV": "staging",
     "PAYMENT_PROVIDER": "disabled",
-    "STORAGE_PROVIDER": "google_drive",
+    "STORAGE_PROVIDER": "local_test",
     "RATE_LIMIT_PROVIDER": "cloudflare",
     "COPYRIGHT_AI_PROVIDER": "BASIC"
   },

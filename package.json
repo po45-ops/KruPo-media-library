@@ -19,6 +19,7 @@
     "bootstrap": "tsx scripts/bootstrap.ts",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "cf:deploy:staging": "node scripts/staging-deploy-guard.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf:deploy": "node scripts/production-deploy-guard.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
