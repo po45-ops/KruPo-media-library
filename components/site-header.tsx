@@ -7,7 +7,9 @@ const links = [["/","หน้าแรก"],["/media","สื่อทั้ง
 export function SiteHeader() {
   return <header className="sticky top-0 z-40 border-b border-[#E1E8F2] bg-white/95 backdrop-blur">
     <div className="container-page flex min-h-20 items-center gap-5">
-      <Link href="/" aria-label="KruPo คลังสื่อ หน้าแรก" className="shrink-0"><Image src="/brand/logo.svg" alt="KruPo คลังสื่อ" width={180} height={48} priority/></Link>
+      <Link href="/" aria-label="KruPo คลังสื่อ หน้าแรก" className="shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F5BD8]/40">
+        <Image src="/brand/logo.svg" alt="KruPo คลังสื่อ" width={205} height={52} className="h-auto w-[172px] md:w-[205px]" priority/>
+      </Link>
       <form action="/media" className="hidden min-w-48 flex-1 lg:flex"><label className="sr-only" htmlFor="global-search">ค้นหาสื่อ</label><div className="relative w-full"><Search className="absolute left-4 top-3.5 h-5 w-5 text-[#66758A]"/><input id="global-search" name="q" className="field pl-12" placeholder="ค้นหาเกม ใบงาน แบบฝึกหัด..."/></div></form>
       <nav aria-label="เมนูหลัก" className="hidden items-center gap-1 xl:flex">{links.map(([href,label])=><Link className="min-h-11 rounded-xl px-3 py-3 font-semibold text-[#14243D] hover:bg-[#EEF4FF] hover:text-[#0F5BD8]" href={href} key={href+label}>{label}</Link>)}</nav>
       <div className="ml-auto hidden items-center gap-2 sm:flex">
