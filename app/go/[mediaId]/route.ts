@@ -5,6 +5,7 @@ import { getRequestPrincipal } from "@/server/auth/principal";
 import { decryptSecureTarget } from "@/server/security/crypto";
 import {enforceRequestRateLimit} from "@/server/security/rate-limit";
 import {assertPublicHttpsUrl} from "@/server/security/safe-url";
+import {isSupabaseConfigured} from "@/server/supabase/server";
 
 export const dynamic = "force-dynamic";
 const idSchema = z.string().uuid();
@@ -13,7 +14,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ medi
   const limited=await enforceRequestRateLimit(request,"game-launch",60,60);if(limited)return limited;
   const { mediaId } = await params;
   if (!idSchema.safeParse(mediaId).success) return new Response("ไม่พบสื่อ", { status: 404 });
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) return new Response("ระบบเกม Staging ยังไม่ได้เชื่อมฐานข้อมูล", { status: 503, headers: { "Cache-Control": "no-store" } });
+  if (!isSupabaseConfigured() || !process.env["SUPABASE_SERVICE_ROLE_KEY"]) return new Response("ระบบเกม Staging ยังไม่ได้เชื่อมฐานข้อมูล", { status: 503, headers: { "Cache-Control": "no-store" } });
   const db = createAdminSupabaseClient();
   const { data: media } = await db.from("media_items").select("id,access_type,status").eq("id", mediaId).single();
   if (!media || !["published", "degraded"].includes(media.status)) return new Response("สื่อนี้ไม่พร้อมใช้งาน", { status: 404, headers: { "Cache-Control": "no-store" } });

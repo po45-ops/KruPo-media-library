@@ -9,10 +9,25 @@ port = 54322
 major_version = 17
 [auth]
 enabled = true
-site_url = "http://localhost:3000"
-additional_redirect_urls = ["http://127.0.0.1:3000/auth/callback"]
+site_url = "https://krupo-media-marketplace.krupo-media-marketplace.workers.dev"
+additional_redirect_urls = [
+  "https://krupo-media-marketplace.krupo-media-marketplace.workers.dev/auth/callback",
+  "https://krupo-media-marketplace.krupo-media-marketplace.workers.dev/auth/email-callback",
+  "http://localhost:3000/auth/callback",
+  "http://localhost:3000/auth/email-callback",
+  "http://127.0.0.1:3000/auth/callback",
+  "http://127.0.0.1:3000/auth/email-callback",
+]
 enable_signup = true
 [auth.email]
 enable_signup = true
 double_confirm_changes = true
 enable_confirmations = true
+max_frequency = "1m"
+otp_length = 8
+[auth.email.template.confirmation]
+subject = "ยืนยันอีเมลสำหรับ KruPo คลังสื่อ"
+content_path = "./supabase/templates/confirmation.html"
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true

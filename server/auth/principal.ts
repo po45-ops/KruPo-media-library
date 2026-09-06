@@ -1,13 +1,15 @@
 import "server-only";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import type { Role } from "@/types/domain";
 import { createServerSupabaseClient, isSupabaseConfigured } from "@/server/supabase/server";
 
 export interface Principal { userId:string; email:string|null; roles:Role[]; }
 
 export async function getRequestPrincipal():Promise<Principal|null>{
+  await connection();
   if(!isSupabaseConfigured()){
-    const appEnv=process.env.APP_ENV??(process.env.NODE_ENV==="test"?"test":"development");
+    const appEnv=process.env.APP_ENV??(process.env.NODE_ENV==="test"?"test":process.env.NODE_ENV==="development"?"development":"production");
     if(appEnv==="development"||appEnv==="test") return {userId:"00000000-0000-4000-8000-000000000001",email:"dev-owner@local.invalid",roles:["owner"]};
     return null;
   }

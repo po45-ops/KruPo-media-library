@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+const hosted = Boolean(process.env.PLAYWRIGHT_BASE_URL);
+
 test("หน้าแรกใช้ภาษาไทยและ Visual Direction ของ KruPo", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /สื่อการสอนคุณภาพ/ })).toBeVisible();
@@ -35,6 +37,7 @@ test("สมัคร Creator และยืนยันข้อตกลง�
 });
 
 test("ส่งสื่อเข้าสู่ Temporary Review Area", async ({ page }) => {
+  test.skip(hosted, "Hosted flow ใช้บัญชี Creator จริงใน supabase-hosted.spec.ts");
   await page.goto("/creator/media/new");
   await expect(page.getByRole("heading", { name: "เพิ่มสื่อใหม่" })).toBeVisible();
   await expect(page.getByText(/Temporary Review Area/)).toBeVisible();
@@ -43,6 +46,7 @@ test("ส่งสื่อเข้าสู่ Temporary Review Area", async (
 });
 
 test("Admin Review แสดงขั้นตอน Human review", async ({ page }) => {
+  test.skip(hosted, "Hosted flow ใช้บัญชี Admin จริงใน supabase-hosted.spec.ts");
   await page.goto("/admin/reviews");
   await expect(page.getByRole("heading", { name: "สื่อรอตรวจ" })).toBeVisible();
   await expect(page.getByText(/ผู้ตรวจเป็นผู้ตัดสินใจ/)).toBeVisible();
@@ -57,12 +61,14 @@ test("Free media มี CTA เล่นฟรีและ Paid media ถูก�
 });
 
 test("Cart บังคับขั้นต่ำ 10 บาท", async ({ page }) => {
+  test.skip(hosted, "Hosted cart เป็น protected route และทดสอบหลัง login ใน supabase-hosted.spec.ts");
   await page.goto("/cart");
   await expect(page.getByText(/ยอดชำระขั้นต่ำ 10 บาท/)).toBeVisible();
   await expect(page.getByRole("button", { name: "ดำเนินการชำระเงิน" })).toBeDisabled();
 });
 
 test("My Library แสดง action ตาม delivery type", async ({ page }) => {
+  test.skip(hosted, "Hosted flow ใช้ session จริงใน supabase-hosted.spec.ts");
   await page.goto("/my-library");
   await expect(page.getByRole("heading", { name: /สวัสดี, สมาชิก KruPo/ })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "เมนูสมาชิก" })).toBeVisible();
@@ -73,10 +79,14 @@ test("My Library แสดง action ตาม delivery type", async ({ page }) 
   await expect(page.getByRole("link", { name: "ดาวน์โหลด" }).first()).toBeVisible();
 });
 
-test("Link health และ Copyright complaint อยู่ใน Admin workflow", async ({ page }) => {
+test("Link health อยู่ใน Admin workflow", async ({ page }) => {
+  test.skip(hosted, "Hosted flow ใช้บัญชี Admin จริงใน supabase-hosted.spec.ts");
   await page.goto("/admin/links");
   await expect(page.getByRole("heading", { name: "ตรวจลิงก์" })).toBeVisible();
   await expect(page.getByText(/403 ไม่ถูกถือว่าเสีย/)).toBeVisible();
+});
+
+test("Copyright complaint เปิดรับคำร้องสาธารณะ", async ({ page }) => {
   await page.goto("/copyright/report");
   await expect(page.getByRole("heading", { name: "แจ้งปัญหาลิขสิทธิ์" })).toBeVisible();
   await expect(page.getByLabel("หลักฐาน")).toBeVisible();

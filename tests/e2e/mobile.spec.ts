@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+const hosted = Boolean(process.env.PLAYWRIGHT_BASE_URL);
+
 test("Mobile navigation มี touch targets หลักอย่างน้อย 44px", async ({ page }) => {
   await page.goto("/");
   const navigation = page.getByRole("navigation", { name: "เมนูมือถือ" });
@@ -22,6 +24,17 @@ test("หน้า Catalog มือถือไม่มี horizontal overflow
 });
 
 test("Admin มือถือเข้าถึง Health Center และ Kill switch ได้", async ({ page }) => {
+  if (hosted) {
+    test.skip(
+      !process.env.SUPABASE_E2E_ADMIN_EMAIL || !process.env.SUPABASE_E2E_ADMIN_PASSWORD,
+      "Hosted mobile admin ต้องใช้บัญชีทดสอบจาก secret environment",
+    );
+    await page.goto("/login?next=%2Fadmin");
+    await page.getByLabel("อีเมล").fill(process.env.SUPABASE_E2E_ADMIN_EMAIL ?? "");
+    await page.getByLabel("รหัสผ่าน").fill(process.env.SUPABASE_E2E_ADMIN_PASSWORD ?? "");
+    await page.getByRole("button", { name: "เข้าสู่ระบบ", exact: true }).click();
+    await expect(page).toHaveURL(/\/admin$/);
+  }
   await page.goto("/admin");
   await expect(page.getByText("Kill switches")).toBeVisible();
   await page.getByRole("link", { name: "Health Center" }).click();

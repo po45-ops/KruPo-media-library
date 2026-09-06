@@ -10,7 +10,7 @@
 
 ## Supabase
 
-สร้างโปรเจกต์แยก development/staging/production แล้วใช้ migration ทุกไฟล์ตามลำดับ ห้ามแก้ production database สด เปิด Email verification และเพิ่ม Google provider เมื่อมี OAuth credential ค่า callback ใช้ `${NEXT_PUBLIC_APP_URL}/auth/callback`
+สร้างโปรเจกต์แยก development/staging/production แล้วใช้ migration ทุกไฟล์ตามลำดับ ห้ามแก้ production database สด เปิด Email verification และเพิ่ม Google provider เมื่อมี OAuth credential ค่า callback ใช้ `${NEXT_PUBLIC_APP_URL}/auth/callback` ขั้นตอน Staging แบบละเอียดอยู่ที่ [SUPABASE_STAGING_TH.md](./SUPABASE_STAGING_TH.md)
 
 กำหนด `BOOTSTRAP_ADMIN_EMAIL` เป็นอีเมล Owner ตัวจริง เมื่อบัญชีนี้ login สำเร็จครั้งแรก server จะเพิ่ม `owner` และเขียน audit log
 

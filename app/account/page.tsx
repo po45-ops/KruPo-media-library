@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LogOut, Save } from "lucide-react";
-import { requirePrincipal } from "@/server/auth/principal";
-import { getUserProfile } from "@/server/repositories/user-data-repository";
+import { redirect } from "next/navigation";
+import { getAuthenticatedUserProfile } from "@/server/repositories/user-data-repository";
 
 export const metadata: Metadata = { title: "บัญชีของฉัน", robots: { index: false, follow: false } };
 
@@ -16,11 +16,11 @@ export default async function Page({
 }: {
   searchParams: Promise<{ saved?: string; error?: string }>;
 }) {
-  const principal = await requirePrincipal("/account");
   const [profile, params] = await Promise.all([
-    getUserProfile(principal.userId, principal.email),
+    getAuthenticatedUserProfile(),
     searchParams,
   ]);
+  if (!profile) redirect("/login?next=%2Faccount");
 
   return (
     <div className="container-page py-10">

@@ -1,5 +1,6 @@
 import "server-only";
 import { createAdminSupabaseClient } from "@/server/supabase/admin";
+import {getSupabasePublicConfig} from "@/server/supabase/config";
 
 export interface AdminDashboardData{
   salesTodaySatang:number;users:number;creators:number;media:number;games:number;pendingReviews:number;brokenLinks:number;copyrightClaims:number;payoutPending:number;aiUsedSatang:number;
@@ -7,7 +8,7 @@ export interface AdminDashboardData{
 export interface FeatureFlagSummary{key:string;enabled:boolean;description:string}
 
 const empty:AdminDashboardData={salesTodaySatang:0,users:0,creators:0,media:0,games:0,pendingReviews:0,brokenLinks:0,copyrightClaims:0,payoutPending:0,aiUsedSatang:0};
-const configured=()=>Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL&&process.env.SUPABASE_SERVICE_ROLE_KEY);
+const configured=()=>Boolean(getSupabasePublicConfig()&&process.env["SUPABASE_SERVICE_ROLE_KEY"]);
 const startOfBangkokDay=()=>{const now=new Date();const bangkokDate=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Bangkok",year:"numeric",month:"2-digit",day:"2-digit"}).format(now);return new Date(`${bangkokDate}T00:00:00+07:00`).toISOString()};
 const startOfMonth=()=>{const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Bangkok",year:"numeric",month:"2-digit"}).format(new Date());return new Date(`${parts}-01T00:00:00+07:00`).toISOString()};
 

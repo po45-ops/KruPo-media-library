@@ -24,5 +24,7 @@ test.describe("Hosted Staging smoke", () => {
     await expect(page).toHaveURL(/\/login\?next=%2Fmy-library/);
     await page.goto("/admin");
     await expect(page).toHaveURL(/\/login\?next=%2Fadmin/);
+    await page.goto("/creator/media/new");
+    await expect(page).toHaveURL(/\/login\?next=%2Fcreator%2Fmedia%2Fnew/);
   });
 });

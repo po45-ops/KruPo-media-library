@@ -66,3 +66,13 @@ export async function getUserProfile(userId:string,email:string|null):Promise<Us
   if(error)throw new Error("อ่านข้อมูลบัญชีไม่สำเร็จ");
   return {displayName:data.display_name||"สมาชิก KruPo",email,createdAt:data.created_at};
 }
+
+export async function getAuthenticatedUserProfile():Promise<UserProfile|null>{
+  if(!isSupabaseConfigured())return {displayName:"สมาชิก KruPo (โหมดพัฒนา)",email:"dev-owner@local.invalid",createdAt:"2026-09-03T00:00:00.000Z"};
+  const db=await createServerSupabaseClient();
+  const {data:{user},error:userError}=await db.auth.getUser();
+  if(userError||!user)return null;
+  const {data,error}=await db.from("profiles").select("display_name,created_at").eq("id",user.id).single();
+  if(error)throw new Error("อ่านข้อมูลบัญชีไม่สำเร็จ");
+  return {displayName:data.display_name||"สมาชิก KruPo",email:user.email??null,createdAt:data.created_at};
+}

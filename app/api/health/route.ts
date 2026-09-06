@@ -1,2 +1,12 @@
-import { NextResponse } from "next/server";import { isSupabaseConfigured } from "@/server/supabase/server";
-export const dynamic="force-dynamic";export async function GET(){const payment=process.env.PAYMENT_PROVIDER||"mock",storage=process.env.STORAGE_PROVIDER||"local_test";const checks={website:{status:"healthy"},database:{status:isSupabaseConfigured()?"healthy":"unknown"},storage:{status:storage==="local_test"?"warning":"healthy",provider:storage},payment:{status:payment==="mock"||payment==="disabled"?"warning":"healthy",provider:payment},auth:{status:isSupabaseConfigured()?"healthy":"unknown"},ai:{status:(process.env.COPYRIGHT_AI_PROVIDER||"BASIC")==="ADVANCED"?"unknown":"healthy"},jobs:{status:"unknown"}};const critical=Object.values(checks).some(x=>x.status==="critical");return NextResponse.json({service:"KruPo คลังสื่อ",status:critical?"critical":"operational",time:new Date().toISOString(),checks},{status:critical?503:200,headers:{"Cache-Control":"no-store"}})}
+import { NextResponse } from "next/server";
+import { getSystemHealthReport } from "@/server/health/system-health";
+
+export const dynamic = "force-dynamic";
+
+export async function GET() {
+  const report = await getSystemHealthReport();
+  return NextResponse.json(report, {
+    status: report.status === "critical" ? 503 : 200,
+    headers: { "Cache-Control": "no-store" },
+  });
+}

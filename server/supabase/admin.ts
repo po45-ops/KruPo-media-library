@@ -1,2 +1,2 @@
-import "server-only";import { createClient } from "@supabase/supabase-js";
-export function createAdminSupabaseClient(){const url=process.env.NEXT_PUBLIC_SUPABASE_URL,key=process.env.SUPABASE_SERVICE_ROLE_KEY;if(!url||!key)throw new Error("Supabase server credential ยังไม่ได้ตั้งค่า");return createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false},global:{headers:{"x-krupo-service":"server"}}})}
+import "server-only";import { createClient } from "@supabase/supabase-js";import {getSupabasePublicConfig} from "@/server/supabase/config";
+export function createAdminSupabaseClient(){const config=getSupabasePublicConfig(),key=process.env["SUPABASE_SERVICE_ROLE_KEY"];if(!config||!key)throw new Error("Supabase server credential ยังไม่ได้ตั้งค่า");return createClient(config.url,key,{auth:{persistSession:false,autoRefreshToken:false},global:{headers:{"x-krupo-service":"server"}}})}

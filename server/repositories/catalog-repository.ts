@@ -1,7 +1,9 @@
 import "server-only";
-import { createClient } from "@supabase/supabase-js";
+import { connection } from "next/server";
 import { demoMedia } from "@/features/catalog/demo-media";
 import type { MediaSummary } from "@/types/domain";
+import { getSupabasePublicConfig } from "@/server/supabase/config";
+import { createAdminSupabaseClient } from "@/server/supabase/admin";
 
 export interface CatalogFilters {
   q?: string;
@@ -83,14 +85,13 @@ function localFallback(filters: CatalogFilters): MediaSummary[] {
     .slice(0, filters.limit ?? 24);
 }
 
-function publicClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return url && key ? createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } }) : null;
+function serverCatalogClient() {
+  return getSupabasePublicConfig() ? createAdminSupabaseClient() : null;
 }
 
 export async function listPublishedMedia(filters: CatalogFilters = {}): Promise<MediaSummary[]> {
-  const client = publicClient();
+  await connection();
+  const client = serverCatalogClient();
   if (!client) return localFallback(filters);
 
   let query = client
@@ -119,7 +120,8 @@ export async function listPublishedMedia(filters: CatalogFilters = {}): Promise<
 }
 
 export async function getPublishedMediaBySlug(slug: string): Promise<MediaSummary | null> {
-  const client = publicClient();
+  await connection();
+  const client = serverCatalogClient();
   if (!client) return localFallback({ limit: 60 }).find((item) => item.slug === slug) ?? null;
   const { data, error } = await client
     .from("media_items")

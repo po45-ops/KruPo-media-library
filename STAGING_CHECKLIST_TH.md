@@ -28,11 +28,12 @@
 
 ## B. ต้องทำเมื่อได้รับ External credentials
 
-- [ ] สร้าง Supabase **Staging project** แยกจาก Production
-- [ ] Link Supabase CLI แล้วรัน migrations 001–005 บน Staging
-- [ ] ตรวจ SQL migration ด้วย PostgreSQL จริงและเก็บผล migration log
-- [ ] รัน RLS adversarial tests ด้วยผู้ใช้ A/B, creator A/B และทุก admin role
-- [ ] เปิด Email verification และ Google provider ใน Supabase Auth
+- [x] ติดตั้ง Supabase CLI แบบ project-pinned และยืนยัน CLI กับบัญชีเจ้าของแล้ว
+- [x] สร้าง Supabase **Staging project** แยกจาก Production
+- [x] Link Supabase CLI แล้วรัน migrations 001–008 บน Staging (`001–007` freeze, `008` Security Advisor hardening)
+- [x] ตรวจ SQL migration ด้วย PostgreSQL จริงและเก็บผล migration status
+- [x] รัน RLS adversarial tests ด้วยผู้ใช้ A/B พร้อมตรวจ Creator/Admin/Owner authorization ฝั่ง Server
+- [x] เปิด Email verification และทดสอบ Hosted callback จริง; Google provider ยังไม่อยู่ในขอบเขตรอบนี้
 - [ ] ทดสอบ register, login, Google OAuth, callback, logout และ password reset จริง
 - [ ] สร้างบัญชีทดสอบ owner/admin/reviewer/moderator/finance/support/creator/user
 - [ ] ทดสอบ `BOOTSTRAP_ADMIN_EMAIL` login ครั้งแรกและตรวจ audit record
@@ -64,7 +65,7 @@
 - [ ] Search ต้องเพิ่ม server pagination และ filters ระดับ/creator/verified/protected/sort ครบ
 - [ ] Cover/preview จาก private storage ต้องมี signed/authorized delivery path
 - [ ] Share buttons ต้องต่อ Copy/LINE/Facebook/Native Share จริงและเพิ่ม dynamic social preview
-- [ ] เพิ่ม logout, reset-password completion และ account management flow
+- [x] มี logout, forgot-password request และ account management flow; reset-password completion หลัง callback ยังต้องทดสอบกับ Auth จริง
 - [ ] เพิ่ม Cloudflare distributed rate-limit adapter และ DNS rebinding protection สำหรับ link checker
 
 ## D. Quality gates ที่ต้องผ่านทุกครั้ง
@@ -84,9 +85,10 @@ pnpm audit --prod
 
 - `pnpm lint`: ผ่าน ไม่มี warning
 - `pnpm typecheck`: ผ่าน
-- `pnpm test`: 8 test files / 42 tests ผ่าน
+- `pnpm test`: 10 test files / 51 tests ผ่าน
 - `pnpm build`: ผ่าน
-- `pnpm test:e2e`: 18 tests ผ่านหลังแก้ test matrix และ locator; รันยืนยันซ้ำจาก source ล่าสุดแล้ว
+- `pnpm test:e2e` (local): 19 tests ผ่าน และ 7 hosted-only tests ถูก skip อย่างชัดเจน
+- Hosted Playwright: 21 tests ผ่าน และ 5 local-only tests ถูก skip อย่างชัดเจน
 - `pnpm cf:build`: ผ่าน และสร้าง `.open-next/worker.js`; มีคำเตือนว่า Node.js Proxy support ใน OpenNext/Cloudflare ยัง experimental จึงต้องพิสูจน์บน Hosted Staging
 - `pnpm audit --prod`: ไม่พบ known vulnerability
 - `pnpm bootstrap`: ผ่านใน local mode พร้อมเตือน Database/Auth, Storage และ Payment ว่ายังใช้ local/mock
@@ -94,5 +96,5 @@ pnpm audit --prod
 ## E. Go / No-Go
 
 - **Local staging mode:** GO สำหรับพัฒนาและตรวจ UI/contract โดยใช้ Mock Payment + LocalTestStorage
-- **Hosted Staging:** NO-GO จนกว่าจะมี Supabase Staging credentials, apply migration จริง และปิด functional gaps ในหมวด C ที่อยู่ใน critical journey
+- **Hosted Staging + Supabase Database/Auth:** GO ที่ URL workers.dev เดิม; migrations, RLS, Auth, role authorization และ Health probe ผ่านด้วย Staging จริง
 - **Production:** STOP / NO-GO — ห้าม Deploy และห้ามใช้ live Stripe keys หรือเงินจริงจนมีคำสั่งใหม่

@@ -1,9 +1,10 @@
 import type {Metadata} from "next";
 import {CreatorNav} from "@/components/creator-nav";
+import {requireAnyRole} from "@/server/auth/principal";
 export const metadata:Metadata={title:"เพิ่มสื่อใหม่",robots:{index:false,follow:false}};
 const subjects=["คณิตศาสตร์","วิทยาศาสตร์","ภาษาไทย","ภาษาอังกฤษ","สังคมศึกษา","คอมพิวเตอร์","ศิลปะ","สุขศึกษา"];
 const mediaTypes=["เกมการศึกษา","ใบงาน","แบบฝึกหัด","PowerPoint","PDF","แบบทดสอบ","วิดีโอ","แผนการสอน","อื่น ๆ"];
-export default function Page(){return <div className="container-page py-9">
+export default async function Page(){await requireAnyRole(["creator"],"/creator/media/new");return <div className="container-page py-9">
   <h1 className="text-3xl font-black text-[#0B2F6B]">เพิ่มสื่อใหม่</h1><p className="mt-2 text-[#66758A]">ไฟล์จะเข้า Temporary Review Area ก่อน ไม่ส่งเข้า permanent storage ทันที</p><div className="mt-6"><CreatorNav/></div>
   <form method="post" action="/api/creator/submissions" encType="multipart/form-data" className="soft-card mt-7 grid gap-5 p-7">
     <div className="grid gap-5 md:grid-cols-2"><label className="grid gap-2 font-bold">ชื่อสื่อ<input required name="titleTh" className="field"/></label><label className="grid gap-2 font-bold">วิชา<select required name="subject" className="field">{subjects.map(x=><option key={x}>{x}</option>)}</select></label></div>

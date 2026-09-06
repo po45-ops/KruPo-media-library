@@ -4,13 +4,15 @@
 
 ## 1. Supabase Staging
 
+**สถานะ:** ใส่ค่าทั้ง 4 รายการใน Cloudflare Staging secret manager แล้วและตรวจ Database/Auth จริงผ่าน โดยเอกสารนี้ไม่เก็บค่าจริง
+
 สร้าง Project แยกสำหรับ Staging แล้วดูค่าจาก Project **Connect** หรือ **Settings → API Keys** ตาม [Supabase API Keys](https://supabase.com/docs/guides/getting-started/api-keys)
 
 | ตัวแปร | ได้จากไหน | Secret |
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Project Connect / Project URL | ไม่ใช่ |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Publishable key (`sb_publishable_...`) หรือ legacy anon key | ไม่ใช่ แต่ต้องพึ่ง RLS |
-| `SUPABASE_SERVICE_ROLE_KEY` | Secret key (`sb_secret_...`) หรือ legacy service_role | **ใช่ — bypass RLS, server-only** |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Publishable key หรือ legacy anon key | ไม่ใช่ แต่ต้องพึ่ง RLS |
+| `SUPABASE_SERVICE_ROLE_KEY` | Secret key หรือ legacy service_role | **ใช่ — bypass RLS, server-only** |
 | `SUPABASE_PROJECT_REF` | Project Settings / URL ของ Project | ไม่ใช่ |
 | `BOOTSTRAP_ADMIN_EMAIL` | อีเมล Owner ที่เจ้าของเลือก | ไม่ใช่ credential แต่เป็น security-sensitive config |
 
@@ -19,6 +21,8 @@
 - เปิด Email + Password และ Require email verification
 - สร้าง Site URL/Redirect URLs สำหรับ `https://<staging-worker>.workers.dev/auth/callback`
 - เปิด Google provider โดยใส่ Google Login Client ID/Client Secret ใน Supabase Dashboard; ค่า Google secret นี้ไม่ต้องใส่ใน source ของ KruPo
+
+รายละเอียด Dashboard, migration และ RLS verification อยู่ที่ [`docs/SUPABASE_STAGING_TH.md`](docs/SUPABASE_STAGING_TH.md)
 
 ## 2. Google Drive Storage (Staging)
 
