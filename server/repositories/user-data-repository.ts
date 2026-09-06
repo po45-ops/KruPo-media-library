@@ -33,7 +33,7 @@ export async function getCartItems(userId:string):Promise<UserMediaItem[]>{
 }
 
 export async function getFavoriteItems(userId:string):Promise<UserMediaItem[]>{
-  if(!isSupabaseConfigured())return [];
+  if(!isSupabaseConfigured())return fallbackMedia().slice(1,3);
   const db=await createServerSupabaseClient();
   const {data,error}=await db.from("favorites").select(`media:media_items(${mediaColumns})`).eq("user_id",userId).order("created_at",{ascending:false});
   if(error)throw new Error("อ่านรายการโปรดไม่สำเร็จ");
@@ -49,7 +49,10 @@ export async function getLibraryItems(userId:string):Promise<Array<UserMediaItem
 }
 
 export async function getPurchaseHistory(userId:string):Promise<UserOrder[]>{
-  if(!isSupabaseConfigured())return [];
+  if(!isSupabaseConfigured())return [
+    {id:"development-order-1",status:"paid",totalSatang:1000,createdAt:"2026-09-01T03:00:00.000Z",paidAt:"2026-09-01T03:01:00.000Z",titles:["คณิตคิดไว ป.4","ภารกิจคำศัพท์"]},
+    {id:"development-order-2",status:"paid",totalSatang:1000,createdAt:"2026-08-25T03:00:00.000Z",paidAt:"2026-08-25T03:01:00.000Z",titles:["ระบบสุริยะ"]},
+  ];
   const db=await createServerSupabaseClient();
   const {data,error}=await db.from("orders").select("id,status,total_satang,created_at,paid_at,order_items(media_title_snapshot)").eq("user_id",userId).order("created_at",{ascending:false}).limit(100);
   if(error)throw new Error("อ่านประวัติการซื้อไม่สำเร็จ");
@@ -57,7 +60,7 @@ export async function getPurchaseHistory(userId:string):Promise<UserOrder[]>{
 }
 
 export async function getUserProfile(userId:string,email:string|null):Promise<UserProfile>{
-  if(!isSupabaseConfigured())return {displayName:"เจ้าของระบบ (โหมดพัฒนา)",email,createdAt:null};
+  if(!isSupabaseConfigured())return {displayName:"สมาชิก KruPo (โหมดพัฒนา)",email,createdAt:"2026-09-03T00:00:00.000Z"};
   const db=await createServerSupabaseClient();
   const {data,error}=await db.from("profiles").select("display_name,created_at").eq("id",userId).single();
   if(error)throw new Error("อ่านข้อมูลบัญชีไม่สำเร็จ");

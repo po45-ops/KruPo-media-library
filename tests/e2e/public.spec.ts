@@ -64,7 +64,11 @@ test("Cart บังคับขั้นต่ำ 10 บาท", async ({ page 
 
 test("My Library แสดง action ตาม delivery type", async ({ page }) => {
   await page.goto("/my-library");
-  await expect(page.getByRole("heading", { name: "คลังสื่อของฉัน" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /สวัสดี, สมาชิก KruPo/ })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "เมนูสมาชิก" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "สรุปคลังสื่อ" })).toContainText("รายการโปรด");
+  await expect(page.getByRole("link", { name: "ประวัติการซื้อ" }).first()).toHaveAttribute("href", "/orders");
+  await expect(page.getByRole("link", { name: "ข้อมูลบัญชี" })).toHaveAttribute("href", "/account");
   await expect(page.getByRole("link", { name: "เปิดสื่อ" }).first()).toBeVisible();
   await expect(page.getByRole("link", { name: "ดาวน์โหลด" }).first()).toBeVisible();
 });
