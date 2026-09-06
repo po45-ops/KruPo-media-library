@@ -8,6 +8,8 @@
   "observability": { "enabled": true },
   "vars": {
     "APP_ENV": "staging",
+    "NEXT_PUBLIC_APP_NAME": "KruPo คลังสื่อ",
+    "NEXT_PUBLIC_APP_URL": "https://krupo-media-marketplace.krupo-media-marketplace.workers.dev",
     "PAYMENT_PROVIDER": "disabled",
     "STORAGE_PROVIDER": "local_test",
     "RATE_LIMIT_PROVIDER": "cloudflare",
