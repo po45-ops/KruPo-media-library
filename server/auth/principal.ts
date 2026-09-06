@@ -19,6 +19,6 @@ export async function getRequestPrincipal():Promise<Principal|null>{
 }
 
 export async function requirePrincipal(next="/my-library"):Promise<Principal>{const p=await getRequestPrincipal();if(!p)redirect(`/login?next=${encodeURIComponent(next)}`);return p;}
-export async function requireAnyRole(allowed:Role[]):Promise<Principal>{const p=await getRequestPrincipal();if(!p)redirect("/login");if(!p.roles.some(r=>r==="owner"||allowed.includes(r)))redirect("/unauthorized");return p;}
+export async function requireAnyRole(allowed:Role[],next="/admin"):Promise<Principal>{const p=await getRequestPrincipal();if(!p)redirect(`/login?next=${encodeURIComponent(next)}`);if(!p.roles.some(r=>r==="owner"||allowed.includes(r)))redirect("/unauthorized");return p;}
 
 export function hasRole(principal:Principal,allowed:Role[]):boolean{return principal.roles.includes("owner")||principal.roles.some(r=>allowed.includes(r));}

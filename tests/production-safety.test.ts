@@ -12,9 +12,11 @@ describe("production safety", () => {
     expect(env.APP_ENV).toBe("staging");
   });
 
-  it("development fixtures ถูกตัดออกจาก production", () => {
+  it("production เปิด staging fixtures ไม่ได้", () => {
+    expect(() => readEnv({ NODE_ENV: "production", APP_ENV: "production", ALLOW_STAGING_DEMO_DATA: "true", NEXT_PUBLIC_APP_URL: "https://krupo.example", PAYMENT_PROVIDER: "stripe", STORAGE_PROVIDER: "google_drive", RATE_LIMIT_PROVIDER: "cloudflare" })).toThrow();
     const source = readFileSync("features/catalog/demo-media.ts", "utf8");
-    expect(source).toContain('process.env.NODE_ENV === "production" ? []');
+    expect(source).toContain('process.env.APP_ENV === "staging"');
+    expect(source).toContain('process.env.ALLOW_STAGING_DEMO_DATA === "true"');
   });
 
   it("migration demo media ทั้งหมดเป็น draft", () => {

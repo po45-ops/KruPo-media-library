@@ -19,7 +19,7 @@
     "bootstrap": "tsx scripts/bootstrap.ts",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf:deploy:staging": "node scripts/staging-deploy-guard.mjs && NEXT_PUBLIC_APP_NAME='KruPo คลังสื่อ' NEXT_PUBLIC_APP_URL='https://krupo-media-marketplace.krupo-media-marketplace.workers.dev' opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf:deploy:staging": "node scripts/staging-deploy-guard.mjs && APP_ENV=staging ALLOW_STAGING_DEMO_DATA=true NEXT_PUBLIC_APP_NAME='KruPo คลังสื่อ' NEXT_PUBLIC_APP_URL='https://krupo-media-marketplace.krupo-media-marketplace.workers.dev' opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf:deploy": "node scripts/production-deploy-guard.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {

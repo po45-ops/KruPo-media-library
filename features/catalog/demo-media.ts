@@ -9,9 +9,12 @@ const developmentFixtures: MediaSummary[] = [
   { id: "66666666-6666-4666-8666-666666666666", slug: "english-game", titleTh: "เกมภาษาอังกฤษ", descriptionTh: "จับคู่คำศัพท์กับภาพสำหรับนักเรียน", subject: "ภาษาอังกฤษ", grade: "ประถมศึกษาปีที่ 6", mediaType: "เกมการศึกษา", creator: "ครูใจดี", accessType: "free", deliveryType: "external_link", priceSatang: 0, rating: 4.8, salesCount: 734, updatedAt: "2026-09-02", protection: "Verified External", linkHealth: "ok", accent: "linear-gradient(135deg,#E85D75,#F6B73C)", demo: true },
 ];
 
-// Fixtures exist only for local development. Staging and production must render
-// records that have passed the database publication workflow.
+// Fixtures are opt-in for hosted staging previews. Production can never enable
+// them because APP_ENV must remain "staging" for this condition to be true.
 export const demoMedia: MediaSummary[] =
-  process.env.NODE_ENV === "production" ? [] : developmentFixtures;
+  process.env.NODE_ENV !== "production" ||
+  (process.env.APP_ENV === "staging" && process.env.ALLOW_STAGING_DEMO_DATA === "true")
+    ? developmentFixtures
+    : [];
 
 export const subjects = ["คณิตศาสตร์", "วิทยาศาสตร์", "ภาษาไทย", "ภาษาอังกฤษ", "สังคมศึกษา", "คอมพิวเตอร์"];

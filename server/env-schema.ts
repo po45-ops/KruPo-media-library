@@ -7,6 +7,7 @@ const optionalEmail = z.preprocess((value) => value === "" ? undefined : value, 
 const schema=z.object({
   NODE_ENV:z.enum(["development","test","production"]).default("development"),
   APP_ENV:z.enum(["development","test","staging","production"]),
+  ALLOW_STAGING_DEMO_DATA:z.enum(["true","false"]).default("false"),
   NEXT_PUBLIC_APP_NAME:z.string().default("KruPo คลังสื่อ"),NEXT_PUBLIC_APP_URL:z.string().url(),
   NEXT_PUBLIC_SUPABASE_URL:optionalUrl,NEXT_PUBLIC_SUPABASE_ANON_KEY:optionalText,SUPABASE_SERVICE_ROLE_KEY:optionalText,BOOTSTRAP_ADMIN_EMAIL:optionalEmail,
   GOOGLE_DRIVE_CLIENT_ID:optionalText,GOOGLE_DRIVE_CLIENT_SECRET:optionalText,GOOGLE_DRIVE_REFRESH_TOKEN:optionalText,GOOGLE_DRIVE_ROOT_FOLDER_ID:optionalText,
@@ -16,6 +17,7 @@ const schema=z.object({
   LINK_CHECK_CONCURRENCY:z.coerce.number().int().min(1).max(20).default(5),LINK_FAILURE_THRESHOLD:z.coerce.number().int().min(1).default(3),LINK_SUSPEND_THRESHOLD:z.coerce.number().int().min(2).default(5),LINK_REPAIR_SLA_HOURS:z.coerce.number().int().min(1).default(72),CREATOR_HOLD_DAYS:z.coerce.number().int().min(0).default(14),MINIMUM_PAYOUT_SATANG:z.coerce.number().int().nonnegative().default(50000)
 }).superRefine((v,ctx)=>{
  if(v.APP_ENV==="production"){
+  if(v.ALLOW_STAGING_DEMO_DATA==="true")ctx.addIssue({code:"custom",path:["ALLOW_STAGING_DEMO_DATA"],message:"Production ห้ามเปิดข้อมูลตัวอย่าง"});
   if(v.PAYMENT_PROVIDER==="mock")ctx.addIssue({code:"custom",path:["PAYMENT_PROVIDER"],message:"Production ห้ามใช้ mock payment"});
   if(v.STORAGE_PROVIDER==="local_test")ctx.addIssue({code:"custom",path:["STORAGE_PROVIDER"],message:"Production ห้ามใช้ local_test storage"});
   if(v.RATE_LIMIT_PROVIDER!=="cloudflare")ctx.addIssue({code:"custom",path:["RATE_LIMIT_PROVIDER"],message:"Production ต้องใช้ distributed rate limiter"});
