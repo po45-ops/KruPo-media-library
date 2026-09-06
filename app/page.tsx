@@ -10,7 +10,6 @@ import {
   Languages,
   Landmark,
   Monitor,
-  Search,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
@@ -33,37 +32,40 @@ export default async function HomePage() {
 
   return <>
     <section className="container-page pt-7">
-      <div className="relative overflow-hidden rounded-[34px] border border-[#DCE8F8] bg-[radial-gradient(circle_at_top_right,_rgba(101,84,232,.16),_transparent_34%),linear-gradient(135deg,#F7FAFF_0%,#FFFFFF_54%,#EEF4FF_100%)] px-6 py-10 shadow-[0_24px_70px_rgba(11,47,107,.09)] md:px-12 md:py-14">
-        <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-[#DDE7FF]/60 blur-3xl" />
-        <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[1.08fr_.92fr]">
-          <div>
-            <span className="badge bg-white/90 text-[#6554E8] shadow-sm ring-1 ring-[#E5E9F5]"><Sparkles className="h-4 w-4"/>KruPo คลังสื่อสำหรับการเรียนรู้ยุคใหม่</span>
-            <h1 className="mt-5 max-w-3xl text-[2.55rem] font-black leading-[1.12] tracking-[-.03em] text-[#0B2F6B] md:text-[4.15rem]">
-              สื่อดี ๆ ที่ช่วยให้<br/>
-              <span className="bg-gradient-to-r from-[#0F5BD8] to-[#6554E8] bg-clip-text text-transparent">การสอนง่ายขึ้น การเรียนสนุกขึ้น</span>
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-[#5D6D84] md:text-lg">
-              รวมเกมการศึกษา ใบงาน แบบฝึกหัด และสื่อพร้อมใช้สำหรับครู นักเรียน และผู้ปกครอง คัดสรรให้ค้นหาง่าย ใช้ได้จริง และเข้าถึงได้ในที่เดียว
-            </p>
-            <form action="/media" className="mt-8 flex max-w-2xl gap-2 rounded-[20px] border border-white/90 bg-white p-2 shadow-[0_14px_36px_rgba(15,91,216,.12)]">
-              <label htmlFor="hero-search" className="sr-only">ค้นหาสื่อ</label>
-              <Search className="ml-2 mt-3 h-5 w-5 shrink-0 text-[#66758A]"/>
-              <input id="hero-search" name="q" className="min-w-0 flex-1 bg-transparent px-2 outline-none" placeholder="ค้นหาเกม ใบงาน แบบฝึกหัด หรือรายวิชา..."/>
-              <button className="btn btn-primary" type="submit">ค้นหา</button>
-            </form>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link className="btn btn-primary" href="/media"><BookOpen className="h-5 w-5"/>ดูสื่อทั้งหมด</Link>
-              <Link className="btn btn-secondary" href="/media?price=free"><Sparkles className="h-5 w-5"/>สื่อฟรี</Link>
-            </div>
-            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#53647D]">
-              <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-[#2FC58D]"/>ใช้งานง่ายและตรวจสอบได้</span>
-              <span className="inline-flex items-center gap-2"><Gamepad2 className="h-4 w-4 text-[#0F5BD8]"/>มีทั้งเกมและสื่อพร้อมใช้</span>
-            </div>
-          </div>
-          <div className="relative mx-auto w-full max-w-[620px]">
-            <div className="absolute inset-x-12 bottom-3 h-16 rounded-full bg-[#173B82]/10 blur-2xl" />
-            <Image src="/brand/hero-learning.svg" alt="แท็บเล็ต หนังสือ และอุปกรณ์การเรียนรู้" width={640} height={390} className="relative w-full drop-shadow-[0_24px_34px_rgba(11,47,107,.12)]" priority/>
-          </div>
+      <div className="relative hidden aspect-[3/1] overflow-hidden rounded-[34px] border border-[#DCE8F8] bg-[#F3F8FF] shadow-[0_24px_70px_rgba(11,47,107,.10)] md:block">
+        <Image
+          src="/brand/hero-modern.jpg"
+          alt=""
+          fill
+          sizes="(min-width: 1280px) 1200px, 100vw"
+          className="object-cover"
+          priority
+        />
+        <div className="sr-only">
+          <h1>คลังสื่อการเรียนรู้ดี ๆ สำหรับครู นักเรียน และผู้ปกครอง</h1>
+          <p>เข้าใช้ฟรีบางส่วน และเลือกซื้อสื่อคุณภาพในราคาเริ่มต้นเพียง 5–10 บาท</p>
+        </div>
+        <Link
+          href="/media"
+          aria-label="ดูสื่อทั้งหมด"
+          title="ดูสื่อทั้งหมด"
+          className="absolute left-[6.0%] top-[60.3%] h-[13.5%] w-[14.2%] rounded-[18px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0F5BD8]/35"
+        />
+        <Link
+          href="/media?price=free"
+          aria-label="ดูสื่อฟรี"
+          title="ดูสื่อฟรี"
+          className="absolute left-[21.0%] top-[60.3%] h-[13.5%] w-[12.8%] rounded-[18px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#2FC58D]/35"
+        />
+      </div>
+
+      <div className="relative overflow-hidden rounded-[28px] border border-[#DCE8F8] bg-gradient-to-br from-[#F7FAFF] via-white to-[#EEF4FF] px-6 py-8 shadow-[0_18px_50px_rgba(11,47,107,.09)] md:hidden">
+        <span className="badge bg-white text-[#0F5BD8] shadow-sm"><Sparkles className="h-4 w-4"/>KruPo คลังสื่อ</span>
+        <h1 className="mt-4 text-4xl font-black leading-[1.15] tracking-[-.03em] text-[#0B2F6B]">คลังสื่อการเรียนรู้ดี ๆ สำหรับทุกคน</h1>
+        <p className="mt-4 text-sm leading-7 text-[#5D6D84]">รวมเกม ใบงาน แบบฝึกหัด และสื่อพร้อมใช้สำหรับครู นักเรียน และผู้ปกครอง</p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link className="btn btn-primary" href="/media"><BookOpen className="h-5 w-5"/>ดูสื่อทั้งหมด</Link>
+          <Link className="btn btn-secondary" href="/media?price=free"><Sparkles className="h-5 w-5"/>สื่อฟรี</Link>
         </div>
       </div>
     </section>
