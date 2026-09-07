@@ -71,7 +71,11 @@ test.describe.serial("Supabase Auth บน Hosted Staging", () => {
 
       await loginWithValues(page, email, password, "/login?error=invalid_credentials", true);
       await page.goto(link.properties.action_link);
-      await expect(page).toHaveURL(/\/my-library$/);
+      await expect
+        .poll(() => new URL(page.url()).pathname, {
+          message: "Email callback ต้องสร้าง session และนำผู้ใช้ไปยัง My Library",
+        })
+        .toBe("/my-library");
       await expect(page.getByRole("heading", { name: /สวัสดี,/ })).toBeVisible();
       const { data: confirmed } = await admin.auth.admin.getUserById(userId!);
       expect(confirmed.user?.email_confirmed_at).toBeTruthy();

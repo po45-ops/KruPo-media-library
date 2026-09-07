@@ -5,6 +5,7 @@ import { safeReturnPath } from "@/server/security/return-path";
 import { getSupabasePublicConfig } from "@/server/supabase/config";
 
 export const metadata: Metadata = { title: "กำลังยืนยันอีเมล", robots: { index: false, follow: false } };
+export const dynamic = "force-dynamic";
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
   const config = getSupabasePublicConfig();
