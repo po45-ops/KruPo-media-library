@@ -26,7 +26,9 @@
 
 ## 2. Google Drive Storage (Staging)
 
-เปิด Google Drive API ใน Google Cloud Console สร้าง OAuth 2.0 Web application และขอ offline access ตาม [Google OAuth Web Server flow](https://developers.google.com/identity/protocols/oauth2/web-server) เลือก scope เท่าที่จำเป็น; Google แนะนำ `drive.file` สำหรับการเข้าถึงไฟล์ที่แอปสร้าง/เลือก และให้เก็บ refresh token อย่างปลอดภัยตาม [Drive scopes guidance](https://developers.google.com/workspace/drive/api/guides/api-specific-auth)
+สถานะปัจจุบัน: OAuth แบบ Desktop app ด้วย scope `drive.file` และ automated verifier ผ่านแล้ว Credential ถูกเก็บนอก repository ด้วย permission `0600`; ค่า Hosted Staging ต้องตั้งผ่าน Cloudflare encrypted secrets เท่านั้น ขั้นตอนทั้งหมดอยู่ที่ [`docs/GOOGLE_DRIVE_STAGING_TH.md`](docs/GOOGLE_DRIVE_STAGING_TH.md)
+
+เปิด Google Drive API ใน Google Cloud Console สร้าง OAuth 2.0 Desktop app และขอ offline access ผ่าน loopback callback เลือก scope `drive.file` เพียงรายการเดียว; Google แนะนำ scope นี้สำหรับการเข้าถึงไฟล์ที่แอปสร้าง/เลือก และให้เก็บ refresh token อย่างปลอดภัยตาม [Drive scopes guidance](https://developers.google.com/workspace/drive/api/guides/api-specific-auth)
 
 | ตัวแปร | ได้จากไหน | Secret |
 |---|---|---|

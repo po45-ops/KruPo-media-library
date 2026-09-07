@@ -109,7 +109,7 @@ test.describe.serial("Supabase Auth บน Hosted Staging", () => {
     expect(body.checks.database.status).toBe("healthy");
     expect(body.checks.auth.status).toBe("healthy");
     expect(body.checks.payment.provider).toBe("disabled");
-    expect(body.checks.storage.provider).toBe("local_test");
+    expect(body.checks.storage.provider).toBe(process.env.PLAYWRIGHT_EXPECT_STORAGE_PROVIDER ?? "local_test");
   });
 });
 

@@ -18,6 +18,8 @@
     "test:e2e": "playwright test",
     "supabase:verify:staging": "tsx scripts/verify-supabase-staging.ts",
     "supabase:provision:e2e": "tsx scripts/provision-supabase-staging-e2e.ts",
+    "storage:authorize:google-drive:staging": "tsx scripts/authorize-google-drive-staging.ts",
+    "storage:verify:google-drive:staging": "tsx scripts/verify-google-drive-staging.ts",
     "bootstrap": "tsx scripts/bootstrap.ts",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
