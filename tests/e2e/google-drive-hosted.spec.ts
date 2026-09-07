@@ -142,6 +142,27 @@ test.describe.serial("Google Drive Hosted Staging", () => {
         reason: "ตรวจไฟล์ Staging แล้ว ไม่พบ active content",
       });
       expect(safety.status, safety.text).toBe(200);
+
+      const { data: submissionRecord, error: submissionRecordError } = await admin
+        .from("media_submissions")
+        .select("id")
+        .eq("media_id", mediaId)
+        .single();
+      if (submissionRecordError || !submissionRecord) throw submissionRecordError ?? new Error("ไม่พบ submission สำหรับตัดสินความเสี่ยง");
+      const { data: reviewResults, error: reviewResultsError } = await admin
+        .from("media_review_results")
+        .select("id,risk,admin_decision")
+        .eq("submission_id", submissionRecord.id);
+      if (reviewResultsError) throw reviewResultsError;
+      for (const result of reviewResults ?? []) {
+        if (result.risk === "LOW" || result.admin_decision === "accept") continue;
+        const decision = await sameOriginPost(page, `/api/admin/review-results/${result.id}/decision`, {
+          decision: "accept",
+          reason: "ผู้ตรวจยอมรับความเสี่ยงของไฟล์ทดสอบ Hosted Staging",
+        });
+        expect(decision.status, decision.text).toBe(200);
+      }
+
       const approval = await sameOriginPost(page, `/api/admin/media/${mediaId}/approve`, {
         reason: "อนุมัติสำหรับ Hosted Google Drive E2E",
       });
