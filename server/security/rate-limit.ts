@@ -22,7 +22,8 @@ export class CloudflareRateLimiter implements RateLimiter{
     const context=await getCloudflareContext({async:true});
     const env=context.env as CloudflareRateLimitEnv;
     const scope=key.split(":",1)[0]??"";
-    const binding=scope==="login"||scope==="register"?env.RATE_LIMIT_AUTH:scope==="download"||scope==="game-launch"?env.RATE_LIMIT_ACCESS:env.RATE_LIMIT_MUTATION;
+    const authScopes=new Set(["login","register","forgot-password","reset-password","auth-finalize"]);
+    const binding=authScopes.has(scope)?env.RATE_LIMIT_AUTH:scope==="download"||scope==="game-launch"?env.RATE_LIMIT_ACCESS:env.RATE_LIMIT_MUTATION;
     if(!binding)throw new Error("Cloudflare rate-limit binding ไม่พร้อม");
     const result=await binding.limit({key});
     return {allowed:result.success,remaining:result.success?Math.max(0,limit-1):0,retryAfterSeconds:result.success?undefined:Math.min(windowSeconds,60)};

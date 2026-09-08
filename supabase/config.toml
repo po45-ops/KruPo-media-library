@@ -28,6 +28,9 @@ otp_length = 8
 [auth.email.template.confirmation]
 subject = "ยืนยันอีเมลสำหรับ KruPo คลังสื่อ"
 content_path = "./supabase/templates/confirmation.html"
+[auth.email.template.recovery]
+subject = "ตั้งรหัสผ่านใหม่สำหรับ KruPo คลังสื่อ"
+content_path = "./supabase/templates/recovery.html"
 [auth.mfa.totp]
 enroll_enabled = true
 verify_enabled = true

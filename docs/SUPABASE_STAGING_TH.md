@@ -83,7 +83,9 @@ Hosted Supabase ต้องตั้ง **Auth > Email Templates > Confirm sign
 <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email">ยืนยันอีเมลและเปิดใช้งานบัญชี</a>
 ```
 
-KruPo รองรับ endpoint `/auth/confirm` แล้ว แต่ Supabase Free plan ที่ใช้ default mailer ไม่อนุญาตแก้ Hosted Email Template ระบบ Staging จึงรองรับลิงก์มาตรฐานผ่าน `/auth/email-callback` เพิ่มเติม: browser รับ fragment, ลบ token ออกจาก URL ทันที, สร้าง cookie session ด้วย Supabase SSR และให้ `/api/auth/finalize` ตรวจ user ฝั่ง server ก่อนเปิดหน้าถัดไป เมื่อกำหนด Custom SMTP แล้วจึง push TokenHash template นี้ได้ การส่งอีเมลจริงผ่าน default mailer มีโควตาต่ำและไม่เหมาะกับ QA ต่อเนื่อง
+KruPo รองรับ endpoint `/auth/confirm` แล้ว และเตรียม TokenHash template ทั้ง signup confirmation กับ password recovery ไว้ใน `supabase/templates/` สำหรับนำไปตั้งใน Hosted Email Templates ระบบยังรองรับลิงก์มาตรฐานผ่าน `/auth/email-callback` เพิ่มเติม: browser รับ fragment, ลบ token ออกจาก URL ทันที, สร้าง cookie session ด้วย Supabase SSR และให้ `/api/auth/finalize` ตรวจ user ฝั่ง server ก่อนเปิดหน้าถัดไป การส่งอีเมลจริงต้องใช้ Custom SMTP ของ Staging; default mailer มีข้อจำกัดผู้รับ อัตราส่งต่ำ และไม่มี SLA จึงไม่ถือว่าผ่าน Hosted email QA
+
+รายละเอียด provider, recovery flow และ security checklist อยู่ที่ `docs/SMTP_STAGING_TH.md`
 
 ## Security Advisor hardening
 

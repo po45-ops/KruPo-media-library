@@ -84,6 +84,51 @@ test.describe.serial("Supabase Auth บน Hosted Staging", () => {
     }
   });
 
+  test("Recovery link สร้าง session ตั้งรหัสผ่านใหม่ และบังคับ login ใหม่", async ({ page }) => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serverKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    test.skip(!url || !serverKey, "ต้องใช้ Supabase server secret ใน process ของ E2E เท่านั้น");
+    const admin = createClient(url!, serverKey!, { auth: { persistSession: false, autoRefreshToken: false } });
+    const email = `krupo.staging.recovery+${Date.now()}-${crypto.randomUUID()}@gmail.com`;
+    const oldPassword = `Old!${crypto.randomUUID()}9a`;
+    const newPassword = `New!${crypto.randomUUID()}8b`;
+    let userId: string | undefined;
+    try {
+      const { data: created, error: createError } = await admin.auth.admin.createUser({
+        email,
+        password: oldPassword,
+        email_confirm: true,
+        user_metadata: { display_name: "สมาชิกทดสอบ Recovery", staging_test_account: true },
+      });
+      if (createError || !created.user) throw new Error("Supabase ไม่สามารถสร้างบัญชีทดสอบ recovery");
+      userId = created.user.id;
+
+      const { data: link, error: linkError } = await admin.auth.admin.generateLink({
+        type: "recovery",
+        email,
+        options: {
+          redirectTo: `${process.env.PLAYWRIGHT_BASE_URL}/auth/email-callback?next=/reset-password`,
+        },
+      });
+      if (linkError || !link.properties) throw new Error("Supabase ไม่สามารถสร้างลิงก์ recovery สำหรับ Hosted E2E");
+
+      await page.goto(link.properties.action_link);
+      await expect.poll(() => new URL(page.url()).pathname).toBe("/reset-password");
+      await expect(page.getByRole("heading", { name: "ตั้งรหัสผ่านใหม่" })).toBeVisible();
+      await page.getByLabel("รหัสผ่านใหม่", { exact: true }).fill(newPassword);
+      await page.getByLabel("ยืนยันรหัสผ่านใหม่").fill(newPassword);
+      await page.getByRole("button", { name: "บันทึกรหัสผ่านใหม่" }).click();
+      await expect(page).toHaveURL(/\/login\?message=password_updated$/);
+      await expect(page.getByText("ตั้งรหัสผ่านใหม่เรียบร้อยแล้ว กรุณาเข้าสู่ระบบอีกครั้ง")).toBeVisible();
+
+      await loginWithValues(page, email, oldPassword, "/login?error=invalid_credentials", true);
+      await loginWithValues(page, email, newPassword, "/my-library");
+      await expect(page.getByRole("heading", { name: /สวัสดี,/ })).toBeVisible();
+    } finally {
+      if (userId) await admin.auth.admin.deleteUser(userId);
+    }
+  });
+
   test("Owner bootstrap และ role authorization มาจาก Server", async ({ page }) => {
     await login(page, "SUPABASE_E2E_OWNER_EMAIL", "SUPABASE_E2E_OWNER_PASSWORD", "/admin");
     await expect(page.getByRole("heading", { name: "แดชบอร์ดผู้ดูแลระบบ" })).toBeVisible();
