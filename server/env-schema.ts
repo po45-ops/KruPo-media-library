@@ -11,7 +11,7 @@ const schema=z.object({
   NEXT_PUBLIC_APP_NAME:z.string().default("KruPo คลังสื่อ"),NEXT_PUBLIC_APP_URL:z.string().url(),
   NEXT_PUBLIC_SUPABASE_URL:optionalUrl,NEXT_PUBLIC_SUPABASE_ANON_KEY:optionalText,SUPABASE_SERVICE_ROLE_KEY:optionalText,BOOTSTRAP_ADMIN_EMAIL:optionalEmail,
   GOOGLE_DRIVE_CLIENT_ID:optionalText,GOOGLE_DRIVE_CLIENT_SECRET:optionalText,GOOGLE_DRIVE_REFRESH_TOKEN:optionalText,GOOGLE_DRIVE_ROOT_FOLDER_ID:optionalText,
-  STRIPE_SECRET_KEY:optionalText,STRIPE_WEBHOOK_SECRET:optionalText,NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:optionalText,
+  STRIPE_SECRET_KEY:optionalText,STRIPE_WEBHOOK_SECRET:optionalText,NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:optionalText,STRIPE_REFUND_INSTRUCTIONS_EMAIL:optionalEmail,
   PAYMENT_PROVIDER:z.enum(["mock","stripe","disabled"]).default("mock"),STORAGE_PROVIDER:z.enum(["local_test","google_drive","cloudflare_r2"]).default("local_test"),RATE_LIMIT_PROVIDER:z.enum(["memory","cloudflare"]).default("memory"),COPYRIGHT_AI_PROVIDER:z.enum(["NONE","BASIC","ADVANCED"]).default("BASIC"),
   COPYRIGHT_AI_MONTHLY_BUDGET_SATANG:z.coerce.number().int().nonnegative().default(150000),MINIMUM_CHECKOUT_SATANG:z.coerce.number().int().nonnegative().default(1000),MEDIA_URL_ENCRYPTION_KEY:z.preprocess((value) => value === "" ? undefined : value, z.string().min(32).optional()),
   LINK_CHECK_CONCURRENCY:z.coerce.number().int().min(1).max(20).default(5),LINK_FAILURE_THRESHOLD:z.coerce.number().int().min(1).default(3),LINK_SUSPEND_THRESHOLD:z.coerce.number().int().min(2).default(5),LINK_REPAIR_SLA_HOURS:z.coerce.number().int().min(1).default(72),CREATOR_HOLD_DAYS:z.coerce.number().int().min(0).default(14),MINIMUM_PAYOUT_SATANG:z.coerce.number().int().nonnegative().default(50000)

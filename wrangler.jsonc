@@ -11,7 +11,7 @@
     "ALLOW_STAGING_DEMO_DATA": "true",
     "NEXT_PUBLIC_APP_NAME": "KruPo คลังสื่อ",
     "NEXT_PUBLIC_APP_URL": "https://krupo-media-marketplace.krupo-media-marketplace.workers.dev",
-    "PAYMENT_PROVIDER": "disabled",
+    "PAYMENT_PROVIDER": "stripe",
     "STORAGE_PROVIDER": "google_drive",
     "RATE_LIMIT_PROVIDER": "cloudflare",
     "COPYRIGHT_AI_PROVIDER": "BASIC"
