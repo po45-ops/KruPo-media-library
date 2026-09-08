@@ -33,8 +33,49 @@ describe("payment providers", () => {
     const stripe = new StripePromptPayProvider("stripe-secret-placeholder", secret);
 
     await expect(stripe.verifyWebhook(payload, signature)).resolves.toMatchObject({
+      kind: "payment",
       status: "failed",
       rawType: "payment_intent.payment_failed",
+    });
+  });
+  it("Stripe refund.updated finalize เมื่อ provider ยืนยัน succeeded", async () => {
+    const secret = "whsec_test_refund_updated";
+    const payload = JSON.stringify({
+      id: "evt_refund_updated",
+      object: "event",
+      type: "refund.updated",
+      data: { object: { id: "re_test", object: "refund", amount: 1500, status: "succeeded", payment_intent: "pi_test", failure_reason: null } },
+    });
+    const signature = Stripe.webhooks.generateTestHeaderString({ payload, secret });
+    const stripe = new StripePromptPayProvider("stripe-secret-placeholder", secret);
+
+    await expect(stripe.verifyWebhook(payload, signature)).resolves.toEqual({
+      kind: "refund",
+      eventId: "evt_refund_updated",
+      providerRefundId: "re_test",
+      providerPaymentId: "pi_test",
+      status: "succeeded",
+      amountSatang: 1500,
+      rawType: "refund.updated",
+      failureReason: undefined,
+    });
+  });
+  it("Stripe refund.failed คงสถานะ failed และเหตุผลจาก provider", async () => {
+    const secret = "whsec_test_refund_failed";
+    const payload = JSON.stringify({
+      id: "evt_refund_failed",
+      object: "event",
+      type: "refund.failed",
+      data: { object: { id: "re_failed", object: "refund", amount: 1500, status: "failed", payment_intent: "pi_test", failure_reason: "declined" } },
+    });
+    const signature = Stripe.webhooks.generateTestHeaderString({ payload, secret });
+    const stripe = new StripePromptPayProvider("stripe-secret-placeholder", secret);
+
+    await expect(stripe.verifyWebhook(payload, signature)).resolves.toMatchObject({
+      kind: "refund",
+      status: "failed",
+      rawType: "refund.failed",
+      failureReason: "declined",
     });
   });
 });
