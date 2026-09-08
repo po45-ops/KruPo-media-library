@@ -1,9 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 64" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 72" role="img" aria-labelledby="title desc">
   <title id="title">KruPo คลังสื่อ</title>
-  <defs><linearGradient id="g" x1="8" y1="8" x2="56" y2="56"><stop stop-color="#0F5BD8"/><stop offset="1" stop-color="#6554E8"/></linearGradient></defs>
-  <rect x="3" y="3" width="58" height="58" rx="18" fill="url(#g)"/>
-  <path d="M14 24 32 15l18 9-18 9-18-9Z" fill="#fff"/><path d="M20 30v10c7 6 17 6 24 0V30l-12 6-12-6Z" fill="#DDF7EC"/>
-  <path d="M49 26v14" stroke="#F6B73C" stroke-width="3" stroke-linecap="round"/><circle cx="49" cy="43" r="3" fill="#F6B73C"/>
-  <text x="74" y="31" font-family="Noto Sans Thai, sans-serif" font-size="24" font-weight="800" fill="#0B2F6B">KruPo</text>
-  <text x="74" y="51" font-family="Noto Sans Thai, sans-serif" font-size="17" font-weight="700" fill="#0F5BD8">คลังสื่อ</text>
+  <desc id="desc">โลโก้ KruPo รูปหนังสือเปิดและประกายการเรียนรู้</desc>
+  <defs>
+    <linearGradient id="brand" x1="8" y1="8" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B2F6B"/>
+      <stop offset=".58" stop-color="#0F5BD8"/>
+      <stop offset="1" stop-color="#32A8FF"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F6B73C"/>
+      <stop offset="1" stop-color="#FF8A3D"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(2 4)">
+    <rect x="0" y="0" width="64" height="64" rx="20" fill="url(#brand)"/>
+    <path d="M13 21.5c7.6-1.8 13.9.1 19 4.6v23.2c-5.3-4.7-11.7-6.6-19-4.8v-23Z" fill="#fff"/>
+    <path d="M51 21.5c-7.6-1.8-13.9.1-19 4.6v23.2c5.3-4.7 11.7-6.6 19-4.8v-23Z" fill="#DDF7EC"/>
+    <path d="M32 26.1v23.2" stroke="#BFD9FF" stroke-width="2"/>
+    <path d="M45.5 12.5l1.8 4.1 4.2 1.8-4.2 1.8-1.8 4.2-1.8-4.2-4.1-1.8 4.1-1.8 1.8-4.1Z" fill="url(#accent)"/>
+  </g>
+
+  <text x="82" y="34" font-family="Noto Sans Thai, system-ui, sans-serif" font-size="30" font-weight="900" letter-spacing="-.8" fill="#0B2F6B">Kru<tspan fill="#0F5BD8">Po</tspan></text>
+  <text x="83" y="58" font-family="Noto Sans Thai, system-ui, sans-serif" font-size="18" font-weight="800" fill="#334E73">คลังสื่อ</text>
+  <rect x="151" y="46" width="62" height="3" rx="1.5" fill="#DCE9FB"/>
 </svg>
