@@ -14,7 +14,19 @@ async function probeStorageHealth(provider: string): Promise<ComponentHealth> {
   if (provider === "local_test") return { status: "warning" };
   try {
     return await getStorageProvider().health();
-  } catch {
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    const credentialNames = [
+      "GOOGLE_DRIVE_CLIENT_ID",
+      "GOOGLE_DRIVE_CLIENT_SECRET",
+      "GOOGLE_DRIVE_REFRESH_TOKEN",
+      "GOOGLE_DRIVE_ROOT_FOLDER_ID",
+    ];
+    const missingCredentials = credentialNames.filter((name) => message.includes(name));
+    console.error("storage_provider_configuration_unavailable", {
+      missingCredentials,
+      reason: missingCredentials.length ? "missing_drive_credentials" : "invalid_storage_configuration",
+    });
     return { status: "critical", reason: "missing_configuration" };
   }
 }
