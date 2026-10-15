@@ -91,22 +91,22 @@ export default async function Page({
 
   return (
     <div className="container-page py-8 sm:py-10">
-      <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-r from-[#EAF3FF] via-[#F3F5FF] to-[#E9F9F5] p-6 sm:p-9">
-        <div className="absolute -right-12 -top-16 h-48 w-48 rounded-full bg-[#6554E8]/10" />
-        <div className="absolute bottom-[-80px] right-20 h-40 w-40 rounded-full bg-[#2FC58D]/10" />
+      <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-r from-[#1c121e] via-[#141624] to-[#0e1017] p-6 sm:p-9 border border-white/10">
+        <div className="absolute -right-12 -top-16 h-48 w-48 rounded-full bg-[#E50914]/10" />
+        <div className="absolute bottom-[-80px] right-20 h-40 w-40 rounded-full bg-[#10B981]/10" />
         <div className="relative flex items-center gap-4">
-          <span className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-white text-[#0F5BD8] shadow-sm sm:h-20 sm:w-20">
+          <span className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-white/5 text-[#E50914] border border-white/10 sm:h-20 sm:w-20">
             <UserRound className="h-9 w-9" />
           </span>
           <div>
-            <p className="font-bold text-[#0F5BD8]">ยินดีต้อนรับกลับ</p>
-            <h1 className="mt-1 text-2xl font-black text-[#0B2F6B] sm:text-3xl">สวัสดี, {profile.displayName}</h1>
-            <p className="mt-1 text-sm text-[#66758A] sm:text-base">จัดการสื่อ สิทธิ์การใช้งาน และประวัติของคุณได้ในที่เดียว</p>
+            <p className="font-bold text-[#E50914]">ยินดีต้อนรับกลับ</p>
+            <h1 className="mt-1 text-2xl font-black text-white sm:text-3xl">สวัสดี, {profile.displayName}</h1>
+            <p className="mt-1 text-sm text-[#94A3B8] sm:text-base">จัดการสื่อ สิทธิ์การใช้งาน และประวัติของคุณได้ในที่เดียว</p>
           </div>
         </div>
       </div>
 
-      <nav className="mt-5 flex gap-2 overflow-x-auto border-b border-[#E1E8F2] pb-3" aria-label="เมนูสมาชิก">
+      <nav className="mt-5 flex gap-2 overflow-x-auto border-b border-white/10 pb-3" aria-label="เมนูสมาชิก">
         <Link href="/my-library" className="btn btn-primary whitespace-nowrap"><BookOpen className="h-4 w-4" />สื่อของฉัน</Link>
         <Link href="/favorites" className="btn btn-secondary whitespace-nowrap"><Bookmark className="h-4 w-4" />รายการโปรด</Link>
         <Link href="/orders" className="btn btn-secondary whitespace-nowrap"><History className="h-4 w-4" />ประวัติการซื้อ</Link>
@@ -115,9 +115,13 @@ export default async function Page({
 
       <section className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="สรุปคลังสื่อ">
         {summary.map(([label, value, Icon, description]) => (
-          <div className="soft-card flex items-start gap-4 p-5" key={label}>
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#EEF4FF] text-[#0F5BD8]"><Icon className="h-5 w-5" /></span>
-            <div><p className="text-sm font-bold text-[#44546B]">{label}</p><p className="mt-1 text-2xl font-black text-[#0B2F6B]">{value.toLocaleString("th-TH")} <span className="text-sm font-bold text-[#66758A]">รายการ</span></p><p className="mt-1 text-xs text-[#66758A]">{description}</p></div>
+          <div className="soft-card flex items-start gap-4 p-5 border border-white/10" key={label}>
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/5 text-[#E50914] border border-white/10"><Icon className="h-5 w-5" /></span>
+            <div>
+              <p className="text-sm font-bold text-[#E2E8F0]">{label}</p>
+              <p className="mt-1 text-2xl font-black text-white">{value.toLocaleString("th-TH")} <span className="text-sm font-bold text-[#94A3B8]">รายการ</span></p>
+              <p className="mt-1 text-xs text-[#94A3B8]">{description}</p>
+            </div>
           </div>
         ))}
       </section>
@@ -141,14 +145,14 @@ export default async function Page({
       </div>
 
       {hasDevelopmentFixtures && (
-        <p className="mt-4 rounded-xl border border-[#F4D78D] bg-[#FFF9E9] p-3 text-sm text-[#7A5710]">
+        <p className="mt-4 rounded-xl border border-[#F4D78D]/30 bg-[#FFF9E9]/10 p-3 text-sm text-[#FBBF24]">
           รายการนี้เป็นข้อมูลทดสอบภายในเครื่องเท่านั้น Staging และ Production จะแสดงเฉพาะสิทธิ์จากฐานข้อมูล
         </p>
       )}
 
       <div className="mt-6 grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
       {visibleItems.length ? (
-        <div className="soft-card divide-y divide-[#E1E8F2] p-2 sm:p-3">
+        <div className="soft-card divide-y divide-white/10 p-2 sm:p-3 border border-white/10">
           {visibleItems.map((media) => {
             const grantedAt = formatGrantedAt(media.grantedAt);
             return (
@@ -157,13 +161,13 @@ export default async function Page({
                   <MediaArtwork title={media.titleTh} subject={media.subject} mediaType={media.mediaType} compact className="h-20 w-full" />
                 </Link>
                 <div className="min-w-44 flex-1">
-                  <Link href={`/media/${media.slug}`} className="font-extrabold text-[#0B2F6B] hover:text-[#0F5BD8]">
+                  <Link href={`/media/${media.slug}`} className="font-extrabold text-white hover:text-[#E50914] transition-colors">
                     {media.titleTh}
                   </Link>
-                  <p className="mt-1 text-sm text-[#66758A]">{media.subject} • {media.grade}</p>
+                  <p className="mt-1 text-sm text-[#94A3B8]">{media.subject} • {media.grade}</p>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    <span className="badge bg-[#DDF7EC] text-[#13845B]">{sourceLabel[media.source] ?? "มีสิทธิ์ใช้งาน"}</span>
-                    {grantedAt && <span className="text-xs text-[#66758A]">ได้รับสิทธิ์ {grantedAt}</span>}
+                    <span className="badge border border-[#10B981]/30 bg-[#064E3B]/80 text-[#34D399]">{sourceLabel[media.source] ?? "มีสิทธิ์ใช้งาน"}</span>
+                    {grantedAt && <span className="text-xs text-[#94A3B8]">ได้รับสิทธิ์ {grantedAt}</span>}
                   </div>
                 </div>
                 <div className="flex w-full flex-wrap gap-2 sm:w-auto">
@@ -192,18 +196,18 @@ export default async function Page({
         </div>
       )}
         <aside className="grid gap-4">
-          <section className="soft-card p-6">
-            <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#EEF4FF] text-[#0F5BD8]"><UserRound className="h-8 w-8" /></span>
-            <h2 className="mt-4 text-center text-lg font-black text-[#0B2F6B]">{profile.displayName}</h2>
-            <div className="mt-5 grid gap-3 border-t border-[#E1E8F2] pt-5 text-sm text-[#66758A]">
+          <section className="soft-card p-6 border border-white/10">
+            <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-white/5 text-[#E50914] border border-white/10"><UserRound className="h-8 w-8" /></span>
+            <h2 className="mt-4 text-center text-lg font-black text-white">{profile.displayName}</h2>
+            <div className="mt-5 grid gap-3 border-t border-white/10 pt-5 text-sm text-[#94A3B8]">
               <p className="flex items-start gap-2"><Mail className="mt-0.5 h-4 w-4 shrink-0" /><span className="break-all">{profile.email ?? "ยังไม่มีอีเมล"}</span></p>
               <p className="flex items-start gap-2"><CalendarDays className="mt-0.5 h-4 w-4 shrink-0" />{formatAccountDate(profile.createdAt)}</p>
             </div>
             <Link className="btn btn-secondary mt-5 w-full" href="/account">แก้ไขโปรไฟล์</Link>
           </section>
-          <section className="rounded-2xl border border-[#B8D2FA] bg-[#F5F9FF] p-5">
-            <h2 className="font-black text-[#0B2F6B]">สิทธิ์เป็นของบัญชีคุณ</h2>
-            <p className="mt-2 text-sm leading-6 text-[#66758A]">KruPo ตรวจสิทธิ์จากรหัสผู้ใช้ทุกครั้งก่อนเปิดเกมหรือดาวน์โหลดสื่อ ไม่ได้ผูกสิทธิ์กับอีเมลเพียงอย่างเดียว</p>
+          <section className="rounded-2xl border border-white/10 bg-[#161826] p-5">
+            <h2 className="font-black text-white">สิทธิ์เป็นของบัญชีคุณ</h2>
+            <p className="mt-2 text-sm leading-6 text-[#94A3B8]">KruPo ตรวจสิทธิ์จากรหัสผู้ใช้ทุกครั้งก่อนเปิดเกมหรือดาวน์โหลดสื่อ ไม่ได้ผูกสิทธิ์กับอีเมลเพียงอย่างเดียว</p>
           </section>
           <Link className="btn btn-primary w-full" href="/media">ค้นหาสื่อเพิ่มเติม</Link>
         </aside>

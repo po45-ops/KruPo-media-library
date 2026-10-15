@@ -13,7 +13,7 @@ export function SiteHeader() {
   const open = openPath === pathname;
   return <header className="site-header">
     <div className="container-page header-inner">
-      <Link href="/" aria-label="KruPo คลังสื่อ หน้าแรก" className="header-logo"><Image src="/brand/logo.svg" alt="KruPo คลังสื่อ" width={157} height={42} priority /></Link>
+      <Link href="/" aria-label="KruPo คลังสื่อ หน้าแรก" className="header-logo"><Image src="/brand/logo.svg" alt="KruPo คลังสื่อ" width={157} height={42} priority style={{ height: "auto" }} /></Link>
       <nav className="desktop-links" aria-label="เมนูหลัก">{links.map(([href, label]) => <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}</nav>
       <div className="header-actions">
         <Link href="/media" className="header-icon header-search" aria-label="ค้นหาสื่อ"><Search size={19} /></Link>

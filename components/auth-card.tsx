@@ -45,21 +45,21 @@ export function AuthCard({
       <div className="auth-surface">
         <div>
           <Image src="/brand/logo.svg" alt="KruPo คลังสื่อ" width={150} height={40} />
-          <h1 className="mt-6 text-2xl font-semibold text-[#142C55]">
+          <h1 className="mt-6 text-2xl font-bold text-white">
             {isLogin ? "เข้าสู่ระบบ" : isRegister ? "สมัครสมาชิก" : "ลืมรหัสผ่าน"}
           </h1>
-          <p className="mt-2 text-sm text-[#66758A]">
+          <p className="mt-2 text-sm text-[#94A3B8]">
             {mode === "forgot" ? "เราจะส่งลิงก์ตั้งรหัสผ่านใหม่ให้คุณ" : "เข้าสู่โลกการเรียนรู้ เก็บสื่อที่ชอบไว้กับคุณ"}
           </p>
         </div>
 
         {message && (
-          <p className="mt-6 rounded-xl border border-[#BFE9D8] bg-[#F0FBF7] p-4 text-sm text-[#176B50]" role="status">
+          <p className="mt-6 rounded-xl border border-[#10B981]/40 bg-[#064E3B]/80 p-4 text-sm text-[#34D399]" role="status">
             {messageLabels[message] ?? "ดำเนินการเรียบร้อยแล้ว"}
           </p>
         )}
         {error && (
-          <p className="mt-6 rounded-xl border border-[#F4BBB5] bg-[#FFF1F0] p-4 text-sm text-[#8A1C13]" role="alert">
+          <p className="mt-6 rounded-xl border border-[#E50914]/40 bg-[#3B1117]/80 p-4 text-sm text-[#FF8585]" role="alert">
             {errorLabels[error] ?? "ไม่สามารถดำเนินการได้ กรุณาลองใหม่"}
           </p>
         )}
@@ -67,24 +67,24 @@ export function AuthCard({
         <form method="post" action={`/api/auth/${mode}`} className="mt-8 grid gap-5">
           {next && <input type="hidden" name="next" value={next} />}
           {isRegister && (
-            <label className="grid gap-2 text-sm font-bold">
+            <label className="grid gap-2 text-sm font-bold text-white">
               ชื่อที่แสดง
               <input required name="displayName" autoComplete="name" className="field" placeholder="เช่น ครูสมชาย" />
             </label>
           )}
-          <label className="grid gap-2 text-sm font-bold">
+          <label className="grid gap-2 text-sm font-bold text-white">
             อีเมล
             <div className="relative">
-              <Mail className="absolute left-4 top-3.5 h-5 w-5 text-[#66758A]" />
+              <Mail className="absolute left-4 top-3.5 h-5 w-5 text-[#94A3B8]" />
               <input required type="email" name="email" autoComplete="email" className="field pl-12" placeholder="name@example.com" />
             </div>
           </label>
           {mode !== "forgot" && <PasswordField isLogin={isLogin} />}
-          {isLogin && <Link href={`/forgot-password${returnQuery}`} className="justify-self-end text-sm font-medium text-[#315DDC]">ลืมรหัสผ่าน?</Link>}
+          {isLogin && <Link href={`/forgot-password${returnQuery}`} className="justify-self-end text-sm font-medium text-[#E50914] hover:underline">ลืมรหัสผ่าน?</Link>}
           {isRegister && (
-            <label className="flex items-start gap-3 text-sm leading-6 text-[#66758A]">
-              <input required type="checkbox" className="mt-1" />
-              ฉันยอมรับ <Link href="/terms" className="font-bold text-[#0F5BD8]">เงื่อนไขการใช้งาน</Link> และนโยบายความเป็นส่วนตัว
+            <label className="flex items-start gap-3 text-sm leading-6 text-[#94A3B8]">
+              <input required type="checkbox" className="mt-1 accent-[#E50914]" />
+              ฉันยอมรับ <Link href="/terms" className="font-bold text-[#E50914] hover:underline">เงื่อนไขการใช้งาน</Link> และนโยบายความเป็นส่วนตัว
             </label>
           )}
           <button className="btn btn-primary w-full" type="submit">
@@ -94,15 +94,15 @@ export function AuthCard({
 
         {mode !== "forgot" && (
           <>
-            <div className="my-5 flex items-center gap-3 text-xs text-[#66758A]"><span className="h-px flex-1 bg-[#E1E8F2]" />หรือ<span className="h-px flex-1 bg-[#E1E8F2]" /></div>
+            <div className="my-5 flex items-center gap-3 text-xs text-[#94A3B8]"><span className="h-px flex-1 bg-white/10" />หรือ<span className="h-px flex-1 bg-white/10" /></div>
             <a className="btn btn-secondary w-full" href={`/api/auth/google${next ? `?next=${encodeURIComponent(next)}` : ""}`}>เข้าสู่ระบบด้วย Google</a>
           </>
         )}
 
-        <p className="mt-6 text-center text-sm text-[#66758A]">
-          {isLogin ? <>ยังไม่มีบัญชี? <Link className="font-bold text-[#315DDC]" href={`/register${returnQuery}`}>สมัครสมาชิก</Link></> : isRegister ? <>มีบัญชีแล้ว? <Link className="font-bold text-[#315DDC]" href={`/login${returnQuery}`}>เข้าสู่ระบบ</Link></> : <Link className="font-bold text-[#315DDC]" href={`/login${returnQuery}`}>กลับไปเข้าสู่ระบบ</Link>}
+        <p className="mt-6 text-center text-sm text-[#94A3B8]">
+          {isLogin ? <>ยังไม่มีบัญชี? <Link className="font-bold text-[#E50914] hover:underline" href={`/register${returnQuery}`}>สมัครสมาชิก</Link></> : isRegister ? <>มีบัญชีแล้ว? <Link className="font-bold text-[#E50914] hover:underline" href={`/login${returnQuery}`}>เข้าสู่ระบบ</Link></> : <Link className="font-bold text-[#E50914] hover:underline" href={`/login${returnQuery}`}>กลับไปเข้าสู่ระบบ</Link>}
         </p>
-        <p className="mt-6 flex items-center justify-center gap-2 text-xs text-[#66758A]"><ShieldCheck className="h-4 w-4 text-[#2FC58D]" />ระบบจะไม่ส่งรหัสผ่านไปยังผู้ดูแล</p>
+        <p className="mt-6 flex items-center justify-center gap-2 text-xs text-[#94A3B8]"><ShieldCheck className="h-4 w-4 text-[#10B981]" />ระบบจะไม่ส่งรหัสผ่านไปยังผู้ดูแล</p>
       </div>
     </div>
   );

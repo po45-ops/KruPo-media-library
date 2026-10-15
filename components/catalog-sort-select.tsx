@@ -16,7 +16,7 @@ export function CatalogSortSelect({
       <input type="hidden" name="q" value={q} />
       <input type="hidden" name="subject" value={subject} />
       <input type="hidden" name="price" value={price} />
-      <label htmlFor="catalog-sort" className="text-sm font-semibold text-[#66758A]">เรียงตาม</label>
+      <label htmlFor="catalog-sort" className="text-sm font-semibold text-[#94A3B8]">เรียงตาม</label>
       <select
         id="catalog-sort"
         name="sort"

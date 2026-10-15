@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowDown, ArrowRight, BookOpen, Mouse, Pause, Play, Search } from "lucide-react";
+import { ArrowRight, Mouse, Pause, Play, Search, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { LearningScene } from "@/components/learning-scene";
 
@@ -54,11 +54,11 @@ export function LearningJourney() {
   return <section className="learning-journey" ref={section} aria-label="เปิดโลกการเรียนรู้กับ KruPo">
     <div className="journey-pin"><div className="container-page journey-content">
       <div className="journey-copy">
-        <span className="journey-tag"><BookOpen size={16} />พื้นที่เล็ก ๆ ของการเรียนรู้ที่ยิ่งใหญ่</span>
+        <span className="journey-tag"><Sparkles size={15} />KRUPO SPOTLIGHT · สื่อการสอนคุณภาพ</span>
         <h1>{chapters[chapter].title}</h1>
         <p className="journey-description">{chapters[chapter].text}</p>
         <form action="/media" className="home-search journey-search-form">
-          <Search size={19} className="text-[#66758A] shrink-0" aria-hidden="true" />
+          <Search size={19} className="text-[#94A3B8] shrink-0" aria-hidden="true" />
           <label htmlFor="journey-search-input" className="sr-only">ค้นหาสื่อ</label>
           <input
             id="journey-search-input"
@@ -71,9 +71,9 @@ export function LearningJourney() {
           </button>
         </form>
         <div className="flex flex-wrap items-center gap-3">
-          <a className="btn btn-primary" href="#start-learning">เริ่มใช้งาน <ArrowDown size={17} /></a>
-          <Link className="btn btn-secondary" href="/media">ดูสื่อทั้งหมด <ArrowRight size={17} /></Link>
-          <Link className="btn border border-[#BFE9D8] bg-[#F0FBF7] text-[#13845B] hover:bg-[#DDF7EC]" href="/media?price=free">สื่อฟรี</Link>
+          <a className="btn btn-hero-play" href="#start-learning"><Play size={17} fill="currentColor" aria-hidden="true" /> เริ่มใช้งาน</a>
+          <Link className="btn btn-secondary" href="/media">ดูสื่อทั้งหมด <ArrowRight size={17} aria-hidden="true" /></Link>
+          <Link className="btn border border-[#10B981]/40 bg-[#064E3B]/80 text-[#34D399] hover:bg-[#064E3B]" href="/media?price=free">สื่อฟรี</Link>
         </div>
       </div>
       <LearningScene />
