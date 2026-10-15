@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowDown, ArrowRight, BookOpen, Mouse, Pause, Play } from "lucide-react";
+import { ArrowDown, ArrowRight, BookOpen, Mouse, Pause, Play, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { LearningScene } from "@/components/learning-scene";
 
@@ -55,12 +55,25 @@ export function LearningJourney() {
     <div className="journey-pin"><div className="container-page journey-content">
       <div className="journey-copy">
         <span className="journey-tag"><BookOpen size={16} />พื้นที่เล็ก ๆ ของการเรียนรู้ที่ยิ่งใหญ่</span>
-        <p className="design-eyebrow">A LITTLE WONDER. A LOT TO LEARN.</p>
         <h1>{chapters[chapter].title}</h1>
         <p className="journey-description">{chapters[chapter].text}</p>
+        <form action="/media" className="home-search" style={{ marginTop: "16px", marginBottom: "20px", maxWidth: "440px" }}>
+          <Search size={19} className="text-[#66758A] shrink-0" aria-hidden="true" />
+          <label htmlFor="journey-search-input" className="sr-only">ค้นหาสื่อ</label>
+          <input
+            id="journey-search-input"
+            name="q"
+            type="search"
+            placeholder="ค้นหาเกม ใบงาน หรือบทเรียน..."
+          />
+          <button type="submit" className="btn btn-primary" style={{ padding: "8px 18px", fontSize: "14px" }}>
+            ค้นหา
+          </button>
+        </form>
         <div className="flex flex-wrap items-center gap-3">
           <a className="btn btn-primary" href="#start-learning">เริ่มใช้งาน <ArrowDown size={17} /></a>
-          <Link className="btn text-[#315DDC]" href="/media">ดูคลังสื่อ <ArrowRight size={17} /></Link>
+          <Link className="btn btn-secondary" href="/media">ดูสื่อทั้งหมด <ArrowRight size={17} /></Link>
+          <Link className="btn border border-[#BFE9D8] bg-[#F0FBF7] text-[#13845B] hover:bg-[#DDF7EC]" href="/media?price=free">สื่อฟรี</Link>
         </div>
       </div>
       <LearningScene />

@@ -15,13 +15,9 @@ export function MediaCard({ media }: { media: MediaSummary }) {
             subject={media.subject}
             mediaType={media.mediaType}
             accent={media.accent}
+            demo={media.demo}
             className="aspect-[16/10] transition duration-300 group-hover:scale-[1.015]"
           />
-          {media.demo && (
-            <span className="absolute bottom-3 left-3 rounded-full border border-white/20 bg-[#14243D]/75 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-sm">
-              ตัวอย่างภายในเครื่อง
-            </span>
-          )}
         </Link>
         <div className="absolute right-3 top-3">
           <FavoriteButton mediaId={media.id} compact />

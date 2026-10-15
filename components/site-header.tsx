@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import { useState } from "react";
 
-const links = [["/media", "ค้นหาสื่อ"], ["/games", "เกมการศึกษา"], ["/creator", "สำหรับผู้สร้าง"]] as const;
+const links = [["/media", "ค้นหาสื่อ"], ["/media?price=free", "สื่อฟรี"], ["/games", "เกมการศึกษา"], ["/creator", "สำหรับผู้สร้าง"]] as const;
 
 export function SiteHeader() {
   const pathname = usePathname();

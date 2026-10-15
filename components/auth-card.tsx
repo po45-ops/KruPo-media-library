@@ -37,7 +37,7 @@ export function AuthCard({
   return (
     <div className="auth-shell">
       <div className="auth-introduction">
-        <p className="design-eyebrow">YOUR NEXT LEARNING ADVENTURE</p>
+        <p className="design-eyebrow">พื้นที่การเรียนรู้สำหรับครู</p>
         <h2>ไอเดียดี ๆ<br />กำลังรอคุณอยู่</h2>
         <p>รวมสื่อที่คุณชอบไว้ในที่เดียว<br />พร้อมหยิบไปใช้ในห้องเรียนครั้งต่อไป</p>
         <LearningScene compact />
