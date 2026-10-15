@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LockKeyhole, Mail, ShieldCheck } from "lucide-react";
+import { Mail, ShieldCheck } from "lucide-react";
+import { PasswordField } from "@/components/auth-fields";
+import { LearningScene } from "@/components/learning-scene";
 
 const messageLabels: Record<string, string> = {
   verify_email: "ส่งลิงก์ยืนยันแล้ว กรุณาตรวจกล่องจดหมายก่อนเข้าสู่ระบบ",
@@ -30,20 +32,24 @@ export function AuthCard({
 }) {
   const isLogin = mode === "login";
   const isRegister = mode === "register";
+  const returnQuery = next ? `?next=${encodeURIComponent(next)}` : "";
 
   return (
-    <div className="grid min-h-[720px] bg-gradient-to-br from-[#E9F4FF] via-[#F8FBFF] to-[#EFEAFF] lg:grid-cols-[1fr_560px_1fr]">
-      <div className="hidden items-end justify-end p-10 lg:flex">
-        <Image src="/brand/hero-learning.svg" alt="อุปกรณ์การเรียนรู้" width={450} height={280} />
+    <div className="auth-shell">
+      <div className="auth-introduction">
+        <p className="design-eyebrow">YOUR NEXT LEARNING ADVENTURE</p>
+        <h2>ไอเดียดี ๆ<br />กำลังรอคุณอยู่</h2>
+        <p>รวมสื่อที่คุณชอบไว้ในที่เดียว<br />พร้อมหยิบไปใช้ในห้องเรียนครั้งต่อไป</p>
+        <LearningScene compact />
       </div>
-      <div className="m-4 self-center rounded-[28px] border border-white/80 bg-white p-7 shadow-2xl shadow-blue-950/10 sm:p-10">
-        <div className="text-center">
-          <Image className="mx-auto" src="/brand/logo.svg" alt="KruPo คลังสื่อ" width={180} height={48} />
-          <h1 className="mt-7 text-2xl font-black text-[#0B2F6B]">
+      <div className="auth-surface">
+        <div>
+          <Image src="/brand/logo.svg" alt="KruPo คลังสื่อ" width={150} height={40} />
+          <h1 className="mt-6 text-2xl font-semibold text-[#142C55]">
             {isLogin ? "เข้าสู่ระบบ" : isRegister ? "สมัครสมาชิก" : "ลืมรหัสผ่าน"}
           </h1>
           <p className="mt-2 text-sm text-[#66758A]">
-            {mode === "forgot" ? "เราจะส่งลิงก์ตั้งรหัสผ่านใหม่ให้คุณ" : "ใช้บัญชีเดียวเพื่อเก็บสื่อที่ได้รับสิทธิ์ไว้ตลอด"}
+            {mode === "forgot" ? "เราจะส่งลิงก์ตั้งรหัสผ่านใหม่ให้คุณ" : "เข้าสู่โลกการเรียนรู้ เก็บสื่อที่ชอบไว้กับคุณ"}
           </p>
         </div>
 
@@ -73,15 +79,8 @@ export function AuthCard({
               <input required type="email" name="email" autoComplete="email" className="field pl-12" placeholder="name@example.com" />
             </div>
           </label>
-          {mode !== "forgot" && (
-            <label className="grid gap-2 text-sm font-bold">
-              รหัสผ่าน
-              <div className="relative">
-                <LockKeyhole className="absolute left-4 top-3.5 h-5 w-5 text-[#66758A]" />
-                <input required minLength={10} type="password" name="password" autoComplete={isLogin ? "current-password" : "new-password"} className="field pl-12" placeholder="อย่างน้อย 10 ตัวอักษร" />
-              </div>
-            </label>
-          )}
+          {mode !== "forgot" && <PasswordField isLogin={isLogin} />}
+          {isLogin && <Link href={`/forgot-password${returnQuery}`} className="justify-self-end text-sm font-medium text-[#315DDC]">ลืมรหัสผ่าน?</Link>}
           {isRegister && (
             <label className="flex items-start gap-3 text-sm leading-6 text-[#66758A]">
               <input required type="checkbox" className="mt-1" />
@@ -101,16 +100,9 @@ export function AuthCard({
         )}
 
         <p className="mt-6 text-center text-sm text-[#66758A]">
-          {isLogin ? <>ยังไม่มีบัญชี? <Link className="font-bold text-[#0F5BD8]" href="/register">สมัครสมาชิก</Link></> : isRegister ? <>มีบัญชีแล้ว? <Link className="font-bold text-[#0F5BD8]" href="/login">เข้าสู่ระบบ</Link></> : <Link className="font-bold text-[#0F5BD8]" href="/login">กลับไปเข้าสู่ระบบ</Link>}
+          {isLogin ? <>ยังไม่มีบัญชี? <Link className="font-bold text-[#315DDC]" href={`/register${returnQuery}`}>สมัครสมาชิก</Link></> : isRegister ? <>มีบัญชีแล้ว? <Link className="font-bold text-[#315DDC]" href={`/login${returnQuery}`}>เข้าสู่ระบบ</Link></> : <Link className="font-bold text-[#315DDC]" href={`/login${returnQuery}`}>กลับไปเข้าสู่ระบบ</Link>}
         </p>
         <p className="mt-6 flex items-center justify-center gap-2 text-xs text-[#66758A]"><ShieldCheck className="h-4 w-4 text-[#2FC58D]" />ระบบจะไม่ส่งรหัสผ่านไปยังผู้ดูแล</p>
-      </div>
-      <div className="hidden items-start p-10 lg:flex">
-        <div className="mt-24 rounded-3xl bg-white/70 p-6 text-[#0B2F6B]">
-          <p className="text-4xl">✓</p>
-          <p className="mt-3 font-extrabold">ซื้อครั้งเดียว ใช้ผ่านบัญชีเดิม</p>
-          <p className="mt-2 text-sm text-[#66758A]">สิทธิ์ผูกกับรหัสผู้ใช้ ไม่หายเมื่อเปลี่ยนอีเมล</p>
-        </div>
       </div>
     </div>
   );

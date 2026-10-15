@@ -1,2 +1,15 @@
 "use client";
-export default function ErrorPage({reset}:{reset:()=>void}){return <div className="container-page grid min-h-[55vh] place-items-center text-center"><div><p className="text-6xl">🛠️</p><h1 className="mt-5 text-3xl font-black text-[#0B2F6B]">ระบบขัดข้องชั่วคราว</h1><p className="mt-2 text-[#66758A]">ข้อมูลของคุณยังปลอดภัย กรุณาลองใหม่อีกครั้ง</p><button className="btn btn-primary mt-6" onClick={reset}>ลองใหม่</button></div></div>}
+import { CircleAlert } from "lucide-react";
+
+export default function ErrorPage({ reset }: { reset: () => void }) {
+  return (
+    <div className="container-page grid min-h-[55vh] place-items-center text-center">
+      <div>
+        <span className="mx-auto grid h-20 w-20 place-items-center rounded-3xl bg-[#FFE4E4] text-[#B42318]"><CircleAlert className="h-10 w-10" /></span>
+        <h1 className="mt-5 text-3xl font-black text-[#0B2F6B]">ระบบขัดข้องชั่วคราว</h1>
+        <p className="mt-2 text-[#66758A]">ข้อมูลของคุณยังปลอดภัย กรุณาลองใหม่อีกครั้ง</p>
+        <button className="btn btn-primary mt-6" onClick={reset}>ลองใหม่</button>
+      </div>
+    </div>
+  );
+}

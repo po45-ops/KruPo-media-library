@@ -6,7 +6,7 @@ export type HealthStatus = "healthy" | "warning" | "critical" | "unknown";
 
 export interface ComponentHealth {
   status: HealthStatus;
-  reason?: "missing_configuration" | "probe_failed" | "timeout";
+  reason?: "missing_configuration" | "probe_failed" | "timeout" | "not_run" | "incomplete_run" | "stale_run" | "not_probed" | "mock_provider" | "disabled_provider";
 }
 
 interface ProbeDependencies {

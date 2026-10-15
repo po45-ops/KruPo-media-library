@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { EmptyState } from "@/components/empty-state";
+import { ReceiptText } from "lucide-react";
 import { requirePrincipal } from "@/server/auth/principal";
 import { formatBaht } from "@/server/domain/money";
 import { getPurchaseHistory } from "@/server/repositories/user-data-repository";
@@ -79,7 +80,7 @@ export default async function Page({
           </div>
         </div>
       ) : (
-        <EmptyState icon="🧾" title="ยังไม่มีคำสั่งซื้อ" description="เมื่อสร้างคำสั่งซื้อแล้ว รายการและสถานะการชำระเงินจะปรากฏที่นี่" />
+        <EmptyState icon={<ReceiptText />} title="ยังไม่มีคำสั่งซื้อ" description="เมื่อสร้างคำสั่งซื้อแล้ว รายการและสถานะการชำระเงินจะปรากฏที่นี่" />
       )}
     </div>
   );

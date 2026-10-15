@@ -32,7 +32,7 @@ async function login(page: Page, email: string, password: string, next: string) 
   await page.context().clearCookies();
   await page.goto(`/login?next=${encodeURIComponent(next)}`);
   await page.getByLabel("อีเมล").fill(email);
-  await page.getByLabel("รหัสผ่าน").fill(password);
+  await page.getByLabel("รหัสผ่าน", { exact: true }).fill(password);
   await page.getByRole("button", { name: "เข้าสู่ระบบ", exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`${next.replaceAll("/", "\\/")}$`));
 }

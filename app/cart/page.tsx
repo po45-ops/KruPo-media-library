@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ShieldCheck, ShoppingBag } from "lucide-react";
+import { ShoppingCart, ShieldCheck, ShoppingBag } from "lucide-react";
+import { MediaArtwork } from "@/components/media-artwork";
 import { CheckoutButton, RemoveCartItemButton } from "@/components/user-actions";
 import { requirePrincipal } from "@/server/auth/principal";
 import { calculateCartTotal, canCheckout, formatBaht } from "@/server/domain/money";
@@ -39,23 +40,24 @@ export default async function CartPage() {
             <div className="mt-4 grid gap-3">
               {items.map((media) => (
                 <article
-                  className="flex flex-wrap items-center gap-4 rounded-2xl border border-[#E1E8F2] p-4"
+                  className="grid grid-cols-[88px_minmax(0,1fr)] gap-3 rounded-2xl border border-[#E1E8F2] p-3 sm:grid-cols-[128px_minmax(0,1fr)_auto] sm:items-center sm:gap-4 sm:p-4"
                   key={media.id}
                 >
                   <Link
                     href={`/media/${media.slug}`}
-                    className="grid h-24 w-32 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#0B2F6B] to-[#6554E8] p-2 text-center text-sm font-black text-white"
+                    aria-label={`ดูรายละเอียด ${media.titleTh}`}
+                    className="overflow-hidden rounded-xl"
                   >
-                    {media.titleTh}
+                    <MediaArtwork title={media.titleTh} subject={media.subject} mediaType={media.mediaType} compact className="aspect-[4/3] w-full" />
                   </Link>
-                  <div className="min-w-44 flex-1">
-                    <Link href={`/media/${media.slug}`} className="font-extrabold text-[#0B2F6B] hover:text-[#0F5BD8]">
+                  <div className="min-w-0 self-center">
+                    <Link href={`/media/${media.slug}`} className="line-clamp-2 font-extrabold text-[#0B2F6B] hover:text-[#0F5BD8]">
                       {media.titleTh}
                     </Link>
-                    <p className="mt-1 text-sm text-[#66758A]">{media.subject} • {media.grade}</p>
-                    <p className="mt-1 text-xs text-[#66758A]">{media.mediaType}</p>
+                    <p className="mt-1 line-clamp-1 text-xs text-[#66758A] sm:text-sm">{media.subject} • {media.grade}</p>
+                    <p className="mt-1 line-clamp-1 text-xs text-[#66758A]">{media.mediaType}</p>
                   </div>
-                  <div className="ml-auto grid justify-items-end gap-2">
+                  <div className="col-span-2 flex items-center justify-between gap-3 border-t border-[#E1E8F2] pt-3 sm:col-span-1 sm:grid sm:justify-items-end sm:border-0 sm:pt-0">
                     <strong className="text-[#159665]">{formatBaht(media.priceSatang)}</strong>
                     <RemoveCartItemButton mediaId={media.id} title={media.titleTh} />
                   </div>
@@ -64,7 +66,7 @@ export default async function CartPage() {
             </div>
           ) : (
             <div className="mt-5 rounded-2xl border border-dashed border-[#B9C7DA] p-10 text-center">
-              <p className="text-4xl">🛒</p>
+              <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[#EEF4FF] text-[#0F5BD8]"><ShoppingCart className="h-7 w-7" /></span>
               <h3 className="mt-3 text-lg font-extrabold text-[#0B2F6B]">ยังไม่มีสื่อในตะกร้า</h3>
               <p className="mt-2 text-sm text-[#66758A]">เลือกสื่อที่ต้องการก่อนดำเนินการชำระเงิน</p>
             </div>

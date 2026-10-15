@@ -12,6 +12,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { EmptyState } from "@/components/empty-state";
+import { MediaArtwork } from "@/components/media-artwork";
 import { requirePrincipal } from "@/server/auth/principal";
 import {
   getFavoriteItems,
@@ -99,7 +100,7 @@ export default async function Page({
           </span>
           <div>
             <p className="font-bold text-[#0F5BD8]">ยินดีต้อนรับกลับ</p>
-            <h1 className="mt-1 text-2xl font-black text-[#0B2F6B] sm:text-3xl">สวัสดี, {profile.displayName} 👋</h1>
+            <h1 className="mt-1 text-2xl font-black text-[#0B2F6B] sm:text-3xl">สวัสดี, {profile.displayName}</h1>
             <p className="mt-1 text-sm text-[#66758A] sm:text-base">จัดการสื่อ สิทธิ์การใช้งาน และประวัติของคุณได้ในที่เดียว</p>
           </div>
         </div>
@@ -152,11 +153,8 @@ export default async function Page({
             const grantedAt = formatGrantedAt(media.grantedAt);
             return (
               <article key={media.id} className="flex flex-wrap items-center gap-3 p-3 sm:gap-4 sm:p-4">
-                <Link
-                  href={`/media/${media.slug}`}
-                  className="grid h-20 w-24 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#0B2F6B] to-[#6554E8] p-2 text-center text-xs font-black text-white sm:w-28"
-                >
-                  {media.titleTh}
+                <Link href={`/media/${media.slug}`} aria-label={`ดูสื่อ ${media.titleTh}`} className="w-24 shrink-0 overflow-hidden rounded-xl sm:w-28">
+                  <MediaArtwork title={media.titleTh} subject={media.subject} mediaType={media.mediaType} compact className="h-20 w-full" />
                 </Link>
                 <div className="min-w-44 flex-1">
                   <Link href={`/media/${media.slug}`} className="font-extrabold text-[#0B2F6B] hover:text-[#0F5BD8]">
@@ -187,7 +185,7 @@ export default async function Page({
       ) : (
         <div>
           <EmptyState
-            icon="📚"
+            icon={<BookOpen />}
             title={items.length ? "ไม่พบสื่อในหมวดนี้" : "ยังไม่มีสื่อในคลังของคุณ"}
             description={items.length ? "ลองเลือกหมวดอื่นหรือดูสื่อทั้งหมด" : "สื่อจะปรากฏที่นี่หลังได้รับสิทธิ์จากการซื้อ สื่อฟรี หรือผู้ดูแลระบบ"}
           />

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FavoriteButton } from "@/components/user-actions";
 import { EmptyState } from "@/components/empty-state";
+import { MediaArtwork } from "@/components/media-artwork";
+import { Heart } from "lucide-react";
 import { requirePrincipal } from "@/server/auth/principal";
 import { formatBaht } from "@/server/domain/money";
 import { getFavoriteItems } from "@/server/repositories/user-data-repository";
@@ -23,9 +25,10 @@ export default async function Page() {
               <div className="relative">
                 <Link
                   href={`/media/${media.slug}`}
-                  className="grid aspect-[16/9] place-items-center bg-gradient-to-br from-[#0B2F6B] to-[#6554E8] p-7 text-center text-xl font-black text-white"
+                  aria-label={`ดูสื่อ ${media.titleTh}`}
+                  className="block overflow-hidden"
                 >
-                  {media.titleTh}
+                  <MediaArtwork title={media.titleTh} subject={media.subject} mediaType={media.mediaType} className="aspect-[16/9]" />
                 </Link>
                 <div className="absolute right-3 top-3">
                   <FavoriteButton mediaId={media.id} initialFavorite compact />
@@ -45,7 +48,7 @@ export default async function Page() {
           ))}
         </div>
       ) : (
-        <EmptyState icon="💙" title="ยังไม่มีรายการโปรด" description="กดรูปหัวใจบนสื่อที่สนใจเพื่อเก็บไว้ที่นี่" />
+        <EmptyState icon={<Heart />} title="ยังไม่มีรายการโปรด" description="กดรูปหัวใจบนสื่อที่สนใจเพื่อเก็บไว้ที่นี่" />
       )}
     </div>
   );

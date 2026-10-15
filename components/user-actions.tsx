@@ -121,7 +121,17 @@ export function FavoriteButton({
   );
 }
 
-export function AddToCartButton({ mediaId, compact = false }: { mediaId: string; compact?: boolean }) {
+export function AddToCartButton({
+  mediaId,
+  compact = false,
+  fullWidth = false,
+  primary = false,
+}: {
+  mediaId: string;
+  compact?: boolean;
+  fullWidth?: boolean;
+  primary?: boolean;
+}) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [added, setAdded] = useState(false);
@@ -145,14 +155,14 @@ export function AddToCartButton({ mediaId, compact = false }: { mediaId: string;
   }
 
   return (
-    <span className="grid gap-1">
+    <span className={`grid gap-1 ${fullWidth ? "w-full min-w-0" : ""}`}>
       <button
         type="button"
         onClick={add}
         disabled={pending || added}
-        className={`${compact ? "btn min-h-11 px-3 text-sm" : "btn btn-secondary"} disabled:cursor-wait disabled:opacity-60`}
+        className={`btn ${compact ? "min-h-11 px-2 text-xs sm:px-3 sm:text-sm" : "min-h-12"} ${primary ? "btn-primary" : "btn-secondary"} ${fullWidth ? "w-full min-w-0 whitespace-nowrap" : ""} disabled:cursor-wait disabled:opacity-60`}
       >
-        {pending ? <LoaderCircle className="h-4 w-4 animate-spin" /> : added ? <Check className="h-4 w-4" /> : <ShoppingCart className="h-4 w-4" />}
+        {pending ? <LoaderCircle className="h-4 w-4 shrink-0 animate-spin" /> : added ? <Check className="h-4 w-4 shrink-0" /> : <ShoppingCart className="h-4 w-4 shrink-0" />}
         {added ? "เพิ่มแล้ว" : compact ? "ใส่ตะกร้า" : "เพิ่มลงตะกร้า"}
       </button>
       <FeedbackText feedback={feedback} />

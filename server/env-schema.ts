@@ -23,15 +23,23 @@ const schema=z.object({
   if(v.RATE_LIMIT_PROVIDER!=="cloudflare")ctx.addIssue({code:"custom",path:["RATE_LIMIT_PROVIDER"],message:"Production ต้องใช้ distributed rate limiter"});
   if(!v.NEXT_PUBLIC_APP_URL.startsWith("https://"))ctx.addIssue({code:"custom",path:["NEXT_PUBLIC_APP_URL"],message:"Production URL ต้องเป็น HTTPS"});
  }
- if(v.PAYMENT_PROVIDER==="stripe"&&(!v.STRIPE_SECRET_KEY||!v.STRIPE_WEBHOOK_SECRET))ctx.addIssue({code:"custom",path:["STRIPE_SECRET_KEY"],message:"Stripe provider ต้องมี server keys"});
- if(v.APP_ENV==="staging"&&v.PAYMENT_PROVIDER==="stripe"&&(!v.STRIPE_SECRET_KEY?.startsWith("sk_test_")||!v.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith("pk_test_")||!v.STRIPE_WEBHOOK_SECRET?.startsWith("whsec_")))ctx.addIssue({code:"custom",path:["STRIPE_SECRET_KEY"],message:"Staging อนุญาตเฉพาะ Stripe test keys"});
+ if(v.PAYMENT_PROVIDER==="stripe"){
+  if(!v.STRIPE_SECRET_KEY)ctx.addIssue({code:"custom",path:["STRIPE_SECRET_KEY"],message:"Stripe server secret is missing"});
+  if(!v.STRIPE_WEBHOOK_SECRET)ctx.addIssue({code:"custom",path:["STRIPE_WEBHOOK_SECRET"],message:"Stripe webhook secret is missing"});
+ }
+ if(v.APP_ENV==="staging"&&v.PAYMENT_PROVIDER==="stripe"){
+  if(v.STRIPE_SECRET_KEY&&!v.STRIPE_SECRET_KEY.startsWith("sk_test_"))ctx.addIssue({code:"custom",path:["STRIPE_SECRET_KEY"],message:"Staging requires a Stripe test secret key"});
+  if(v.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY&&!v.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.startsWith("pk_test_"))ctx.addIssue({code:"custom",path:["NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"],message:"Staging requires a Stripe test publishable key"});
+  if(!v.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)ctx.addIssue({code:"custom",path:["NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"],message:"Stripe test publishable key is missing"});
+  if(v.STRIPE_WEBHOOK_SECRET&&!v.STRIPE_WEBHOOK_SECRET.startsWith("whsec_"))ctx.addIssue({code:"custom",path:["STRIPE_WEBHOOK_SECRET"],message:"Staging requires a Stripe test webhook secret"});
+ }
  if(v.STORAGE_PROVIDER==="google_drive"&&(!v.GOOGLE_DRIVE_CLIENT_ID||!v.GOOGLE_DRIVE_CLIENT_SECRET||!v.GOOGLE_DRIVE_REFRESH_TOKEN||!v.GOOGLE_DRIVE_ROOT_FOLDER_ID))ctx.addIssue({code:"custom",path:["GOOGLE_DRIVE_CLIENT_ID"],message:"Google Drive provider credential ไม่ครบ"});
 });
 export type AppEnv=z.infer<typeof schema>;
 export function readEnv(overrides:Record<string,string|undefined>=process.env):AppEnv{
  const inferredAppEnv=overrides.NODE_ENV==="production"?"production":overrides.NODE_ENV==="test"?"test":"development";
  const result=schema.safeParse({...overrides,APP_ENV:overrides.APP_ENV??inferredAppEnv});
- if(!result.success)throw new Error(`การตั้งค่าระบบไม่พร้อม: ${result.error.issues.map(i=>i.path.join(".")).join(", ")}`);
+ if(!result.success)throw new Error(`การตั้งค่าระบบไม่พร้อม: ${result.error.issues.map(i=>`${i.path.join(".")}: ${i.message}`).join(", ")}`);
  return result.data;
 }
 export function validateProductionSafety(env:AppEnv){if(env.APP_ENV!=="production")return;if(env.PAYMENT_PROVIDER==="mock"||env.STORAGE_PROVIDER==="local_test"||env.RATE_LIMIT_PROVIDER!=="cloudflare")throw new Error("Production safety guard ปฏิเสธ provider จำลองหรือ rate limiter ที่ไม่กระจาย")}

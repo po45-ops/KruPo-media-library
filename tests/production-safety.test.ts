@@ -12,6 +12,21 @@ describe("production safety", () => {
     expect(env.APP_ENV).toBe("staging");
   });
 
+  it("ระบุชื่อค่า Stripe Staging ที่ขาด โดยไม่แสดงค่า secret", () => {
+    expect(() => readEnv({
+      NODE_ENV: "production",
+      APP_ENV: "staging",
+      NEXT_PUBLIC_APP_URL: "https://staging.example",
+      PAYMENT_PROVIDER: "stripe",
+    })).toThrow(/STRIPE_SECRET_KEY: Stripe server secret is missing/);
+    expect(() => readEnv({
+      NODE_ENV: "production",
+      APP_ENV: "staging",
+      NEXT_PUBLIC_APP_URL: "https://staging.example",
+      PAYMENT_PROVIDER: "stripe",
+    })).toThrow(/NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: Stripe test publishable key is missing/);
+  });
+
   it("production เปิด staging fixtures ไม่ได้", () => {
     expect(() => readEnv({ NODE_ENV: "production", APP_ENV: "production", ALLOW_STAGING_DEMO_DATA: "true", NEXT_PUBLIC_APP_URL: "https://krupo.example", PAYMENT_PROVIDER: "stripe", STORAGE_PROVIDER: "google_drive", RATE_LIMIT_PROVIDER: "cloudflare" })).toThrow();
     const source = readFileSync("features/catalog/demo-media.ts", "utf8");

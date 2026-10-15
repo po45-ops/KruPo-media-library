@@ -26,7 +26,7 @@ test("สมัครและเข้าสู่ระบบมีโคร�
   await expect(page.getByRole("link", { name: "เข้าสู่ระบบด้วย Google" })).toBeVisible();
   await page.goto("/login");
   await expect(page.getByLabel("อีเมล")).toBeVisible();
-  await expect(page.getByLabel("รหัสผ่าน")).toBeVisible();
+  await expect(page.getByLabel("รหัสผ่าน", { exact: true })).toBeVisible();
 });
 
 test("สมัคร Creator และยืนยันข้อตกลงผู้ขาย", async ({ page }) => {
@@ -56,7 +56,8 @@ test("Free media มี CTA เล่นฟรีและ Paid media ถูก�
   await page.goto("/media/word-mission");
   await expect(page.getByRole("link", { name: "เล่นฟรี" })).toBeVisible();
   await page.goto("/media/quick-math-p4");
-  await expect(page.getByRole("link", { name: "ปลดล็อก" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "เพิ่มลงตะกร้า" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "ไปที่ตะกร้า" })).toBeVisible();
   await expect(page.getByRole("link", { name: "เล่นฟรี" })).toHaveCount(0);
 });
 

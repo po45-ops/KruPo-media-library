@@ -4,6 +4,7 @@ import { demoMedia } from "@/features/catalog/demo-media";
 import type { MediaSummary } from "@/types/domain";
 import { getSupabasePublicConfig } from "@/server/supabase/config";
 import { createAdminSupabaseClient } from "@/server/supabase/admin";
+import { catalogSortColumns, sortCatalogItems, type CatalogSort } from "@/features/catalog/sort";
 
 export interface CatalogFilters {
   q?: string;
@@ -12,6 +13,7 @@ export interface CatalogFilters {
   mediaType?: string;
   excludeId?: string;
   limit?: number;
+  sort?: CatalogSort;
 }
 
 type Relation<T> = T | T[] | null;
@@ -76,12 +78,12 @@ function mapRow(row: CatalogRow): MediaSummary {
 
 function localFallback(filters: CatalogFilters): MediaSummary[] {
   const query = filters.q?.trim().toLocaleLowerCase("th") ?? "";
-  return demoMedia
+  return sortCatalogItems(demoMedia
     .filter((item) => !filters.excludeId || item.id !== filters.excludeId)
     .filter((item) => !filters.subject || item.subject === filters.subject)
     .filter((item) => !filters.price || item.accessType === filters.price)
     .filter((item) => !filters.mediaType || item.mediaType === filters.mediaType)
-    .filter((item) => !query || `${item.titleTh} ${item.descriptionTh} ${item.subject} ${item.grade} ${item.creator}`.toLocaleLowerCase("th").includes(query))
+    .filter((item) => !query || `${item.titleTh} ${item.descriptionTh} ${item.subject} ${item.grade} ${item.creator}`.toLocaleLowerCase("th").includes(query)), filters.sort ?? "new")
     .slice(0, filters.limit ?? 24);
 }
 
@@ -94,12 +96,14 @@ export async function listPublishedMedia(filters: CatalogFilters = {}): Promise<
   const client = serverCatalogClient();
   if (!client) return localFallback(filters);
 
+  const sorting = catalogSortColumns[filters.sort ?? "new"];
   let query = client
     .from("media_items")
     .select(publicCatalogColumns)
     .in("status", ["published", "degraded"])
     .is("hidden_at", null)
-    .order("published_at", { ascending: false })
+    .order(sorting.column, { ascending: sorting.ascending })
+    .order("id", { ascending: true })
     .limit(Math.min(Math.max(filters.limit ?? 24, 1), 60));
 
   if (filters.excludeId) query = query.neq("id", filters.excludeId);

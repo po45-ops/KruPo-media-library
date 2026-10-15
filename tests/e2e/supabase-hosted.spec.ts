@@ -17,7 +17,7 @@ const enabled = requiredNames.every((name) => Boolean(process.env[name]));
 async function login(page: Page, emailName: string, passwordName: string, next: string) {
   await page.goto(`/login?next=${encodeURIComponent(next)}`);
   await page.getByLabel("อีเมล").fill(process.env[emailName] ?? "");
-  await page.getByLabel("รหัสผ่าน").fill(process.env[passwordName] ?? "");
+  await page.getByLabel("รหัสผ่าน", { exact: true }).fill(process.env[passwordName] ?? "");
   await page.getByRole("button", { name: "เข้าสู่ระบบ", exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`${next.replaceAll("/", "\\/")}$`));
 }
@@ -166,7 +166,7 @@ async function loginWithValues(page: Page, email: string, password: string, expe
   const next = expectFailure ? "/my-library" : expectedPath;
   await page.goto(`/login?next=${encodeURIComponent(next)}`);
   await page.getByLabel("อีเมล").fill(email);
-  await page.getByLabel("รหัสผ่าน").fill(password);
+  await page.getByLabel("รหัสผ่าน", { exact: true }).fill(password);
   await page.getByRole("button", { name: "เข้าสู่ระบบ", exact: true }).click();
   await expect(page).toHaveURL(new URL(expectedPath, process.env.PLAYWRIGHT_BASE_URL).toString());
 }

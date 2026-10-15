@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import { Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { RouteChrome } from "@/components/route-chrome";
 
 const appName = process.env.NEXT_PUBLIC_APP_NAME || "KruPo คลังสื่อ";
+const thaiFont = Noto_Sans_Thai({ subsets: ["thai", "latin"], display: "swap", variable: "--font-thai" });
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
@@ -18,5 +20,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#0B2F6B" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="th"><body><a href="#main" className="sr-only focus:not-sr-only">ข้ามไปเนื้อหาหลัก</a><RouteChrome>{children}</RouteChrome></body></html>;
+  return <html lang="th" className={thaiFont.variable}><body><a href="#main" className="skip-link">ข้ามไปเนื้อหาหลัก</a><RouteChrome>{children}</RouteChrome></body></html>;
 }
