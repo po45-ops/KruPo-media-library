@@ -25,15 +25,16 @@ jobs:
           PAYMENT_PROVIDER: mock
           STORAGE_PROVIDER: local_test
       - run: pnpm exec playwright install --with-deps chromium
+      # Local E2E has no Supabase session; the test principal is only enabled for APP_ENV=test.
       - run: pnpm test:e2e --project=chromium
         env:
-          APP_ENV: staging
+          APP_ENV: test
           NEXT_PUBLIC_APP_URL: http://localhost:3000
           PAYMENT_PROVIDER: mock
           STORAGE_PROVIDER: local_test
       - run: pnpm test:e2e --project=mobile
         env:
-          APP_ENV: staging
+          APP_ENV: test
           NEXT_PUBLIC_APP_URL: http://localhost:3000
           PAYMENT_PROVIDER: mock
           STORAGE_PROVIDER: local_test
