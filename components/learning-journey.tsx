@@ -57,7 +57,7 @@ export function LearningJourney() {
         <span className="journey-tag"><BookOpen size={16} />พื้นที่เล็ก ๆ ของการเรียนรู้ที่ยิ่งใหญ่</span>
         <h1>{chapters[chapter].title}</h1>
         <p className="journey-description">{chapters[chapter].text}</p>
-        <form action="/media" className="home-search" style={{ marginTop: "16px", marginBottom: "20px", maxWidth: "440px" }}>
+        <form action="/media" className="home-search journey-search-form">
           <Search size={19} className="text-[#66758A] shrink-0" aria-hidden="true" />
           <label htmlFor="journey-search-input" className="sr-only">ค้นหาสื่อ</label>
           <input
